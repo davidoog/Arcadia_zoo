@@ -1,0 +1,287 @@
+@font-face {
+    font-family: 'Nerko One';
+    src: url('./fonts/NerkoOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Niconne';
+    src: url('./fonts/Niconne-Regular.ttf') format('truetype');
+}
+
+@font-face { 
+    font-family: 'Roboto';
+    src: url('./fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+.login-mobile {
+    display: none;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #F5F5DC;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.625em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(199, 205, 185, 0.55);
+    z-index: 1000;
+}
+
+.menu-icon {
+    display: none; /* Masqué par défaut */
+    position: absolute;
+    top: 1.5vh;
+    left: 1.5vw;
+    z-index: 1000; /* Assurez-vous qu'il est au-dessus d'autres éléments */
+    cursor: pointer;
+}
+
+.menu-hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 20px;
+}
+
+.menu-hamburger span {
+    display: block;
+    width: 100%;
+    height: 0.3vw;
+    background-color: black;
+}
+
+html, body { /* Style de base */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #F5F5DC;
+}
+
+.topbar { /* Barre de navigation */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.625em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(199, 205, 185, 0.55); /* Couleur de fond avec 55% de transparence */
+    z-index: 1000;
+}
+
+.topbar .menu { /* Menu de navigation */
+    width: 100%;
+}
+
+.topbar .menu ul {
+    display: flex;
+    justify-content: space-between; /* Espacement entre les éléments */
+    list-style-type: none; /* Supprime les puces de la liste */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.topbar .menu ul li { 
+    flex: 1;
+    text-align: center;
+}
+
+.topbar .menu ul li.connexion a { /* Style du bouton "Connexion" */
+    background-color: #A0724D;
+    padding: 0.3125em 0.9375em;
+    border-radius: 3.125em;
+    color: black;
+    text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+.topbar .menu ul li:first-child { 
+    text-align: left;
+}
+
+.topbar .menu ul li:last-child { /* Positionnement du bouton "Connexion" */
+    position: relative;
+    text-align: right;
+    right: 4.5vh;
+}
+
+.topbar .menu ul li a { /* Style des liens du menu */
+    color: #FFFFFF;
+    opacity: 1;
+    text-shadow: none;
+    text-decoration: none;
+    font-size: 1.125rem;
+    padding: 0.625rem 0.9375rem;
+    -webkit-text-stroke: 0.025rem #000000;
+    font-family: 'Roboto';
+    font-weight: 500;
+    text-shadow: 
+        -0.0625rem -0.0625rem 0 #000, 
+        0.0625rem -0.0625rem 0 #000, 
+        -0.0625rem 0.0625rem 0 #000, 
+        0.0625rem 0.0625rem 0 #000;
+
+}
+
+
+.topbar .menu ul li a:hover {
+    text-decoration: underline; /* Soulignement au survol */
+}
+
+/* Style général pour la page Contact */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #F5F5DC;
+    margin: 0;
+    padding: 0;
+}
+
+.contact-container {
+    max-width: 600px;
+    margin: 5% auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    
+}
+
+h1 {
+    font-family: 'Georgia', serif;
+    font-size: 2rem;
+    text-align: center;
+    color: #444444;
+    margin-bottom: 50px;
+    position: relative;
+    top: 30px;
+
+}
+
+p {
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #666666;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    margin-bottom: 5px;
+    color: #333333;
+    font-weight: bold;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+input[type="email"] {
+    margin-bottom: 15px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #A0724D;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-custom {
+    background-color: #A0724D;
+    color: white;
+}
+
+.btn-custom:hover {
+    background-color: #44e132;
+}
+
+@media (max-width: 767px) {
+    /* Assurez-vous que le body n'a pas de marges ou de padding */
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .menu ul li {
+        display: none; /* Masquer le menu complet */
+    }
+
+    .menu ul li.connexion {
+        display: block;
+    }
+
+    .menu-icon {
+        display: block; /* Afficher le menu hamburger */
+    }
+
+    .topbar {
+        flex-direction: row-reverse;
+        padding: 0.2rem;
+        max-width: 100vw; /* Assurez-vous que la topbar ne dépasse pas */
+    }
+
+    .small-logo .small-lettre-z,
+    .small-logo .small-lettre-o1,
+    .small-logo .small-lettre-o2 {
+        font-size: 2rem;
+        -webkit-text-stroke: 0.1vw, black;
+    }
+
+    .small-logo .small-lettre-z {
+        left: 0.9rem;
+    }
+
+    .small-logo .small-lettre-o1 {
+        left: 1.8rem;
+    }
+
+    .small-logo .small-lettre-o2 {
+        left: 2.4rem;
+    }
+
+    .small-logo .small-Arcadia {
+        font-size: 1rem;
+        left: 0.2rem;
+        top: 5.5rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}

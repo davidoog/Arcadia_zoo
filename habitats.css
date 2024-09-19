@@ -1,0 +1,509 @@
+@font-face {
+    font-family: 'Nerko One';
+    src: url('./fonts/NerkoOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Niconne';
+    src: url('./fonts/Niconne-Regular.ttf') format('truetype');
+}
+
+@font-face { 
+    font-family: 'Roboto';
+    src: url('./fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+.login-mobile {
+    display: none;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #F5F5DC;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.625em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(199, 205, 185, 0.55);
+    z-index: 1000;
+}
+
+.menu-icon {
+    display: none; /* Masqué par défaut */
+    position: absolute;
+    top: 1.5vh;
+    left: 1.5vw;
+    z-index: 1000; /* Assurez-vous qu'il est au-dessus d'autres éléments */
+    cursor: pointer;
+}
+
+.menu-hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 20px;
+}
+
+.menu-hamburger span {
+    display: block;
+    width: 100%;
+    height: 0.3vw;
+    background-color: black;
+}
+
+html, body { /* Style de base */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #F5F5DC;
+}
+
+.topbar { /* Barre de navigation */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.625em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(199, 205, 185, 0.55); /* Couleur de fond avec 55% de transparence */
+    z-index: 1000;
+}
+
+.topbar .menu { /* Menu de navigation */
+    width: 100%;
+}
+
+.topbar .menu ul {
+    display: flex;
+    justify-content: space-between; /* Espacement entre les éléments */
+    list-style-type: none; /* Supprime les puces de la liste */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.topbar .menu ul li { 
+    flex: 1;
+    text-align: center;
+}
+
+.topbar .menu ul li.connexion a { /* Style du bouton "Connexion" */
+    background-color: #A0724D;
+    padding: 0.3125em 0.9375em;
+    border-radius: 3.125em;
+    color: black;
+    text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+.topbar .menu ul li:first-child { 
+    text-align: left;
+}
+
+.topbar .menu ul li:last-child { /* Positionnement du bouton "Connexion" */
+    position: relative;
+    text-align: right;
+    right: 4.5vh;
+}
+
+.topbar .menu ul li a { /* Style des liens du menu */
+    color: #FFFFFF;
+    opacity: 1;
+    text-shadow: none;
+    text-decoration: none;
+    font-size: 1.125rem;
+    padding: 0.625rem 0.9375rem;
+    -webkit-text-stroke: 0.025rem #000000;
+    font-family: 'Roboto';
+    font-weight: 500;
+    text-shadow: 
+        -0.0625rem -0.0625rem 0 #000, 
+        0.0625rem -0.0625rem 0 #000, 
+        -0.0625rem 0.0625rem 0 #000, 
+        0.0625rem 0.0625rem 0 #000;
+
+}
+
+
+.topbar .menu ul li a:hover {
+    text-decoration: underline; /* Soulignement au survol */
+}
+
+.small-logo {
+    position: absolute;
+    top: 0px; 
+    left: 0px; 
+    z-index: 200; 
+    margin: 0; 
+    padding: 0; 
+}
+
+.small-logo .small-lettre-z { /* Style de la petite lettre "Z" */
+    -webkit-text-stroke: 1px, black;
+    color: #98A9A3;
+    font-size: 50px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-family: 'libre baskerville';
+    position: absolute;
+    top: 50px;
+    left: 15px;
+
+}
+
+.small-logo .small-lettre-o1 { /* Style de la première petite lettre "O" */
+    -webkit-text-stroke: 1px, black;
+    color: #BEBFB8;
+    font-size: 50px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-family: 'libre baskerville';
+    position: absolute;
+    top: 50px;
+    left: 40px;
+
+}
+
+.small-logo .small-lettre-o2 { /* Style de la deuxième petite lettre "O" */
+    -webkit-text-stroke: 1px, black;
+    color: #98A9A3;
+    font-size: 50px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-family: 'libre baskerville';
+    position: absolute;
+    top: 50px;
+    left: 57px;
+
+}
+
+.small-logo .small-Arcadia { /* Style du texte "Arcadia" */
+    font-family: 'Nerko One';
+    font-size: 20px;
+    color: #DDCFCF;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: black;
+    padding: 1px 10px;
+    position: absolute;
+    top: 105px;
+    left: 10px;
+    
+}
+
+
+
+.menu ul {
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.menu ul li {
+    flex: 1;
+    text-align: center;
+}
+
+.small-logo {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 200;
+    margin: 0;
+    padding: 0;
+}
+
+.hero-section {
+    background-image: url('./image/image-fond-guépard-habitat.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 80vh;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden; /* Important pour contenir l'effet de zoom */
+    position: relative;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    background-image: inherit;
+    background-size: inherit;
+    background-repeat: inherit;
+    background-position: inherit;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1; /* S'assurer que l'image est en arrière-plan */
+    animation: zoomBackground 20s infinite alternate;
+}
+
+@keyframes zoomBackground {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+
+.titre-habitat {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 4rem;
+    font-style: italic;
+    -webkit-text-stroke: 1.6px #000000;
+    text-shadow: 
+        1px 1px 0px black,  /* Ombre en bas à droite */
+        -1px 1px 0px black, /* Ombre en bas à gauche */
+        1px -1px 0px black, /* Ombre en haut à droite */
+        -1px -1px 0px black;
+    margin-bottom: 2.5rem;
+}
+
+.title-habitat {
+    font-family: 'Roboto';
+    color: #2C3E50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 17em;
+    box-sizing: border-box;
+    margin-top: 150px;
+}
+
+.habitat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 1em;
+}
+
+.habitat img {
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Transition douce pour l'effet de zoom */
+}
+
+.habitat img:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.animal-container {
+    position: relative;
+    background-color: #F8F4EC;
+    padding: 50px;
+    margin: 130px auto;
+    width: 90%; /* Ajuster la largeur selon ce que tu souhaites */
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 50px;
+    padding-top: 80px;
+}
+
+.animal-layout {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+
+ }
+
+.animal-list {
+    width: 55%; /* La liste des animaux occupe 50% de la largeur */
+}
+
+.animal-details-container {
+    width: 48%; /* La colonne des détails occupe 40% de la largeur */
+    background-color: #F0E3CF;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+}
+
+.arbre-container {
+    position: absolute; /* Absolue pour le positionner par rapport à .animal-container */
+    top: 50px; /* Ajuster la distance du haut */
+    right: 20px; /* Ajuster la distance de droite */
+    width: 50%; /* Ajuste la taille de l'image */
+    height: auto;
+}
+
+.oiseau-container {
+    position: absolute; /* Absolue pour le positionner par rapport à .animal-container */
+    top: 50px; /* Ajuster la distance du haut */
+    right: 20px; /* Ajuster la distance de droite */
+    width: 50%; /* Ajuste la taille de l'image */
+    height: auto;
+}
+
+.tortue-container {
+    position: absolute; /* Absolue pour le positionner par rapport à .animal-container */
+    top: 50px; /* Ajuster la distance du haut */
+    right: 20px; /* Ajuster la distance de droite */
+    width: 50%; /* Ajuste la taille de l'image */
+    height: auto;
+}
+
+.intro-text {
+    font-family: 'Georgia', serif;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.list-title {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.animal-info {
+    display: block;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px; /* Espace entre les colonnes */
+}
+
+.animal-card {
+    cursor: pointer;
+    width: 50%; /* Chaque carte occupe 48% de la largeur pour un affichage en deux colonnes */
+    background-color: #F5F5DC;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease; /* Transition douce pour l'effet de zoom */
+}
+
+.animal-card img {
+    width: 100%; /* L'image prend toute la largeur de la carte */
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+    
+    
+}
+
+.animal-card:hover {
+    transform: scale(1.1); /* Agrandit l'image de 10% lors du survol */
+}
+
+.animal-details {
+    background-color: #F0E3CF;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.animal-item {
+    display: flex;
+    flex-direction: column; /* Disposer les éléments verticalement (image + texte) */
+    justify-content: center; /* Centrer verticalement */
+    align-items: center; /* Centrer horizontalement */
+    text-align: center; /* Centrer le texte */
+    margin-bottom: 20px; /* Espace entre chaque animal */
+    margin-left: 4em;
+}
+
+
+@media (max-width: 768px) {
+    
+    .small-logo .small-lettre-z,
+    .small-logo .small-lettre-o1,
+    .small-logo .small-lettre-o2 {
+        font-size: 2rem;
+        -webkit-text-stroke: 0.1vw, black;
+    }
+
+    .small-logo .small-lettre-z {
+        left: 0.9rem;
+    }
+
+    .small-logo .small-lettre-o1 {
+        left: 1.8rem;
+    }
+
+    .small-logo .small-lettre-o2 {
+        left: 2.4rem;
+    }
+
+    .small-logo .small-Arcadia {
+        font-size: 1rem;
+        left: 0.2rem;
+        top: 5.5rem;
+    }
+    
+    .hero-section {
+        height: 60vh; /* Réduction de la hauteur pour les petits écrans */
+        background-position: top; /* Ajuster l'image en fonction du contenu visible */
+        padding: 20px; /* Espacement pour éviter que le contenu touche les bords */
+    }
+
+    .menu ul li {
+        display: none; /* Masquer le menu complet */
+    }
+
+    
+
+    .menu ul li.connexion {
+        display: block;
+        
+
+    }
+    
+    .menu-icon {
+        display: block; /* Afficher le menu hamburger */
+    }
+
+    .topbar {
+        flex-direction: row-reverse;
+        padding: 0.2rem;
+    }
+
+    .titre-habitat {
+        font-size: 1.9rem;
+        -webkit-text-stroke: 1px #000000;
+    text-shadow: 
+        1px 1px 0px black,  /* Ombre en bas à droite */
+        -1px 1px 0px black, /* Ombre en bas à gauche */
+        1px -1px 0px black, /* Ombre en haut à droite */
+        -1px -1px 0px black;
+    }
+}

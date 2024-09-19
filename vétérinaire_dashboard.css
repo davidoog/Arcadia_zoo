@@ -1,0 +1,15 @@
+.admin-section {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+.admin-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.btn-block {
+    width: 100%;
+    margin-bottom: 10px;
+}

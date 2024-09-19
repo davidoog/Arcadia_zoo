@@ -1,0 +1,470 @@
+@font-face {
+    font-family: 'Nerko One';
+    src: url('./fonts/NerkoOne-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Niconne';
+    src: url('./fonts/Niconne-Regular.ttf') format('truetype');
+}
+
+@font-face { 
+    font-family: 'Roboto';
+    src: url('./fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+.login-mobile {
+    display: none;
+}
+
+/* Styles pour l'icône du menu hamburger */
+.menu-icon {
+    display: none; /* Masqué par défaut */
+    position: absolute;
+    top: 1.5vh;
+    left: 1.5vw;
+    z-index: 1000; /* Assurez-vous qu'il est au-dessus d'autres éléments */
+    cursor: pointer;
+}
+
+.menu-hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 20px;
+}
+
+.menu-hamburger span {
+    display: block;
+    width: 100%;
+    height: 0.3vw;
+    background-color: black;
+}
+
+
+html, body { /* Style de base */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #F5F5DC;
+}
+
+.topbar { /* Barre de navigation */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.625em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(199, 205, 185, 0.55); /* Couleur de fond avec 55% de transparence */
+    z-index: 1000;
+}
+
+.topbar .menu { /* Menu de navigation */
+    width: 100%;
+}
+
+.topbar .menu ul {
+    display: flex;
+    justify-content: space-between; /* Espacement entre les éléments */
+    list-style-type: none; /* Supprime les puces de la liste */
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.topbar .menu ul li { 
+    flex: 1;
+    text-align: center;
+}
+
+.topbar .menu ul li.connexion a { /* Style du bouton "Connexion" */
+    background-color: #A0724D;
+    padding: 0.3125em 0.9375em;
+    border-radius: 3.125em;
+    color: black;
+    text-shadow: 0.5px 0.5px 1px rgba(0, 0, 0, 0.1);
+
+}
+
+
+
+.topbar .menu ul li:first-child { 
+    text-align: left;
+}
+
+.topbar .menu ul li:last-child { /* Positionnement du bouton "Connexion" */
+    position: relative;
+    text-align: right;
+    right: 4.5vh;
+}
+
+.topbar .menu ul li a { /* Style des liens du menu */
+    color: #FFFFFF;
+    opacity: 1;
+    text-shadow: none;
+    text-decoration: none;
+    font-size: 1.125rem;
+    padding: 0.625rem 0.9375rem;
+    -webkit-text-stroke: 0.025rem #000000;
+    font-family: 'Roboto';
+    font-weight: 500;
+    text-shadow: 
+        -0.0625rem -0.0625rem 0 #000, 
+        0.0625rem -0.0625rem 0 #000, 
+        -0.0625rem 0.0625rem 0 #000, 
+        0.0625rem 0.0625rem 0 #000;
+
+}
+
+
+.topbar .menu ul li a:hover {
+    text-decoration: underline; /* Soulignement au survol */
+}
+
+.small-logo {
+    position: absolute;
+    top: 0px; 
+    left: 0px; 
+    z-index: 200; 
+    margin: 0; 
+    padding: 0; 
+}
+
+.small-logo .small-lettre-z { /* Style de la petite lettre "Z" */
+    -webkit-text-stroke: 1px, black;
+    color: #98A9A3;
+    font-size: 50px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-family: 'libre baskerville';
+    position: absolute;
+    top: 50px;
+    left: 15px;
+
+}
+
+.small-logo .small-lettre-o1 { /* Style de la première petite lettre "O" */
+    -webkit-text-stroke: 1px, black;
+    color: #BEBFB8;
+    font-size: 50px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-family: 'libre baskerville';
+    position: absolute;
+    top: 50px;
+    left: 40px;
+
+}
+
+.small-logo .small-lettre-o2 { /* Style de la deuxième petite lettre "O" */
+    -webkit-text-stroke: 1px, black;
+    color: #98A9A3;
+    font-size: 50px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-family: 'libre baskerville';
+    position: absolute;
+    top: 50px;
+    left: 57px;
+
+}
+
+.small-logo .small-Arcadia { /* Style du texte "Arcadia" */
+    font-family: 'Nerko One';
+    font-size: 20px;
+    color: #DDCFCF;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: black;
+    padding: 1px 10px;
+    position: absolute;
+    top: 105px;
+    left: 10px;
+    
+}
+
+.section-connexion {
+    background-color: #FEFEEF;
+    border-radius: 2.1875rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 17.25rem;
+    max-width: 37.5rem;
+    width: 20%;
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    top: 15vh; /* Ajuste la position verticale selon le besoin */
+}
+
+.small-logo-connexion {
+    position: absolute;
+    z-index: 100;
+    top: -50px;
+    left: 40%;
+    padding: 0 auto;
+
+}
+
+.section-connexion .small-lettre-z-connexion { /* Style de la petite lettre "Z" */
+    -webkit-text-stroke: 1px, black;
+    color: #98A9A3;
+    font-size: 50px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-family: 'libre baskerville';
+    position: absolute;
+    top: 50px;
+    left: 15px;
+
+}
+
+.section-connexion .small-lettre-o1-connexion { /* Style de la première petite lettre "O" */
+    -webkit-text-stroke: 1px, black;
+    color: #BEBFB8;
+    font-size: 50px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-family: 'libre baskerville';
+    position: absolute;
+    top: 50px;
+    left: 40px;
+
+}
+
+.section-connexion .small-lettre-o2-connexion { /* Style de la deuxième petite lettre "O" */
+    -webkit-text-stroke: 1px, black;
+    color: #98A9A3;
+    font-size: 50px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    font-family: 'libre baskerville';
+    position: absolute;
+    top: 50px;
+    left: 57px;
+
+}
+
+.section-connexion .small-Arcadia-connexion { /* Style du texte "Arcadia" */
+    font-family: 'Nerko One';
+    font-size: 20px;
+    color: #DDCFCF;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: black;
+    padding: 1px 10px;
+    position: absolute;
+    top: 105px;
+    left: 10px;
+    z-index: 100;
+    
+}
+
+.titre-connexion {
+    font-family: 'Georgia';
+    font-size: 1.7rem;
+    font-weight: 1;
+    position: absolute;
+    top: 25%;
+    left: 30%;
+
+}
+
+.login {
+    width: 90%;
+    position: absolute;
+    left: 2em;
+    padding: 0 auto;
+    top: 32%;
+}
+
+.login input {
+    width: 100%;
+    border-radius: 2.25rem;
+    padding: 16px 20px;
+    background-color: #D9D9D9;
+    box-sizing: border-box;
+    border: none;
+    font-size: 20px;
+
+}
+
+#password {
+    margin-top: 1em;
+}
+
+.btn-custom {
+    width: 350px;
+    margin: 0 auto;
+    display: block;
+    margin-top: 40px;
+}
+
+.info-connexion {
+    font-size: 1.2rem;
+    font-family: 'Roboto';
+}
+
+
+@media (max-width: 767px) {
+    .menu ul li {
+        display: none; /* Masquer le menu complet */
+    }
+
+    
+
+    .menu ul li.connexion {
+        display: block;
+        
+
+    }
+    
+    .menu-icon {
+        display: block; /* Afficher le menu hamburger */
+    }
+
+    .topbar {
+        flex-direction: row-reverse;
+        padding: 0.2rem;
+    }
+
+    .small-logo .small-lettre-z,
+    .small-logo .small-lettre-o1,
+    .small-logo .small-lettre-o2 {
+        font-size: 2rem;
+        -webkit-text-stroke: 0.1vw, black;
+    }
+
+    .small-logo .small-lettre-z {
+        left: 0.9rem;
+    }
+
+    .small-logo .small-lettre-o1 {
+        left: 1.8rem;
+    }
+
+    .small-logo .small-lettre-o2 {
+        left: 2.4rem;
+    }
+
+    .small-logo .small-Arcadia {
+        font-size: 1rem;
+        left: 0.2rem;
+        top: 5.5rem;
+    }
+
+    .section-connexion {
+        display: none;
+    }
+
+    .small-logo {
+        display: block;
+        position: absolute;
+        z-index: 100;
+        top: 5px;
+        left: 40%;
+        padding: 0 auto;
+
+    }
+
+    .titre-connexion {
+        position: absolute;
+        top: -15%;
+        left: 25%;
+    }
+
+    .login-mobile {
+        display: block;
+        position: relative;
+        top: 32vh;
+    }
+
+    .login-mobile input {
+        width: 98%;
+        border-radius: 2.25rem;
+        padding: 16px 18px;
+        background-color: #D9D9D9;
+        box-sizing: border-box;
+        border: none;
+        font-size: 20px;
+        margin-top: 1em;
+        margin-left: 0.1em;
+        margin-right: 0.2em;
+    
+    }
+
+    .btn-custom {
+        width: 250px;
+        margin: 0 auto;
+        display: block;
+        margin-top: 40px;
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1281px) {
+    
+    .menu ul li {
+        display: none; /* Masquer le menu complet */
+    }
+
+    
+
+    .menu ul li.connexion {
+        display: block;
+        
+
+    }
+    
+    .menu-icon {
+        display: block; /* Afficher le menu hamburger */
+    }
+
+    .topbar {
+        flex-direction: row-reverse;
+        padding: 0.2rem;
+    }
+
+    .login-mobile {
+        display: none;
+    }
+
+    .small-logo .small-lettre-z,
+    .small-logo .small-lettre-o1,
+    .small-logo .small-lettre-o2 {
+        font-size: 2rem;
+        -webkit-text-stroke: 0.1vw, black;
+    }
+
+    .small-logo {
+        position: absolute;
+        top: 0; /* Positionné tout en haut */
+        left: 0; /* Aligne tout à gauche */
+        margin: 0;
+        padding: 0;
+    }
+    
+    .small-logo .small-lettre-z {
+        left: 0.9rem; 
+    }
+    
+    .small-logo .small-lettre-o1 {
+        left: 1.8rem; /* Ajustez en fonction de la position souhaitée */
+    }
+    
+    .small-logo .small-lettre-o2 {
+        left: 2.4rem;
+    }
+    
+    .small-logo .small-Arcadia {
+        font-size: 1rem;
+        left: 0.2rem;
+        top: 5.5rem;
+    }
+}

@@ -1,0 +1,41 @@
+.consultation-block {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.consultation-info {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#resetButton {
+    background-color: #ff4d4d;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+}
+
+#resetButton:hover {
+    background-color: #e60000;
+}
+
+.admin-section {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+.admin-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.col-md-4 {
+    margin-bottom: 25px; 
+}
