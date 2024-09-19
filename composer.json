@@ -1,5 +1,8 @@
 {
     "require": {
-        "mongodb/mongodb": "^1.19"
+        "php": "^7.4",
+        "mongodb/mongodb": "^1.9",
+        "ext-mbstring": "*",
+        "ext-ctype": "*"
     }
 }
