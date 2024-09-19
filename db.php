@@ -3,7 +3,7 @@
 $host = 'localhost';
 $db = 'arcadia_db'; // nom de la base de données que tu as créée
 $user = 'root'; // ton utilisateur MySQL
-$pass = 'C1secret!'; // ton mot de passe MySQL
+$pass = ''; // ton mot de passe MySQL
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

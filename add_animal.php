@@ -105,8 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="mb-3">
                 <label for="food_quantity" class="form-label">Quantité de nourriture</label>
                 <div class="input-group">
-                     <input type="number" class="form-control" id="food_quantity" name="food_quantity" step="0.01" required>
-                     <select class="form-select" id="food_unit" name="food_unit" required>
+                     <input type="number" class="form-control" id="food_quantity" name="food_quantity" required>
+                        <select class="form-select" id="food_unit" name="food_unit" required>
                             <option value="kg">kg</option>
                             <option value="g">g</option>
                         </select>
