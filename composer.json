@@ -2,7 +2,6 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "mongodb/mongodb": "^1.9",
-        "ext-mbstring": "*",
-        "ext-type": "*"
+        "ext-mbstring": "*"
     }
 }
