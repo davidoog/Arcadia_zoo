@@ -87,7 +87,7 @@ Voici les identifiants pour accéder aux différents rôles disponibles dans l'a
 - **Nom d'utilisateur** : `employee_user`
 - **Mot de passe** : `dd80e1549790cddeef43504fc5555781d42b90ecc5af68ba9195c84a63233211`
 
-### Parcours possibles :
+### Fonctionnalités possibles :
 
 1. **Parcours Administrateur** : Gérer les animaux, habitats, services et horaires du zoo.
 2. **Parcours Vétérinaire** : Remplir des comptes rendus de santé pour chaque animal, vérifier la nourriture consommée, et surveiller les états de santé des animaux.
