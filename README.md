@@ -17,7 +17,7 @@ git clone https://github.com/monpseudo/arcadia_zoo.git
 Ensuite,
 
 	1.	Créer la base de données :
-Ouvrez MySQL Workbench et exécutez le fichier SQL fourni pour créer la base de données. Utilisez le script suivant (modifiez le nom de la base de données si nécessaire) :
+Ouvrez MySQL Workbench et exécutez le fichier SQL fourni dans le répertoire `/sql` pour créer la base de données. Utilisez le script suivant (modifiez le nom de la base de données si nécessaire) :
 CREATE DATABASE arcadia_db;
 
 ## Importer les données
@@ -32,25 +32,33 @@ CREATE DATABASE arcadia_db;
 
 ## Configuration de l'environnement
 
-1. **Modifier le fichier de configuration :**
+1. **Modifier le fichier `db.php` :**
 
-   Accédez au fichier de configuration de votre application (généralement `config.php` ou un équivalent) et modifiez les paramètres de connexion à la base de données pour qu'ils correspondent à votre configuration locale :
+   Accédez au fichier `db.php` à la racine de votre projet et modifiez les paramètres de connexion à la base de données pour qu'ils correspondent à votre configuration locale :
 
    ```php
    $dbHost = 'localhost';       // Adresse du serveur de base de données
    $dbName = 'arcadia_db';      // Nom de votre base de données
-   $dbUser = 'votre_utilisateur_mysql'; // Votre utilisateur MySQL
-   $dbPass = 'Votre mot de passe';       // Votre mot de passe MySQL
+   $dbUser = 'root';            // Votre utilisateur MySQL
+   $dbPass = '';                // Votre mot de passe MySQL (vide si aucun mot de passe)
 
 
 ## Lancer le serveur
 
 1. **Démarrer le serveur :**
 
-   Ouvrez XAMPP (ou votre serveur local) et démarrez les services Apache et MySQL. Vérifiez que les deux services sont bien en cours d'exécution. Cela vous permettra de servir votre application PHP et d'accéder à la base de données.
+   Ouvrez un terminal, placez-vous dans le dossier de votre projet et lancez un serveur PHP local avec la commande suivante :
+   ```bash
+   cd /chemin/vers/ton/projet
+   php -S localhost:8000
 
-2. **Accéder à l'application :**
+Cela démarrera un serveur PHP local sur l’adresse http://localhost:8000.
 
-   Ouvrez votre navigateur web et saisissez l'URL suivante :   http://localhost/arcadia_zoo
-Remplacez `nom_du_depot` par le nom du dossier de votre dépôt cloné. Cela vous amènera à la page d'accueil de l'application.
+
+
+# Accéder à l'application 
+Ouvrez votre navigateur web et saisissez l’URL suivante :
+	
+ 	http://localhost:8000
+
 
