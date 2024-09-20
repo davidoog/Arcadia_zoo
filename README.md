@@ -13,7 +13,7 @@ Avant de lancer l'application en local, assurez-vous d'avoir les éléments suiv
 
 Clonez le dépôt Git en utilisant la commande suivante :   
 
-git clone https://github.com/monpseudo/arcadia_zoo.git
+git clone https://github.com/davidoog/arcadia_zoo.git
 
 
 
