@@ -26,7 +26,7 @@ $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
 
             <div class="side-menu" id="side-menu">
                 <ul>
-                    <li><a href="arcadia_accueil.html">Accueil</a></li>
+                    <li><a href="arcadia_accueil.php">Accueil</a></li>
                     <li><a href="arcadia_habitats.php">Habitats</a></li>
                     <li><a href="arcadia_services.php">Services</a></li>
                     <li><a href="arcadia_contact.html">Contact</a></li>
@@ -36,7 +36,7 @@ $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
 
             <div class="menu">
                 <ul>
-                    <li><a href="arcadia_accueil.html">Retour vers la page d'accueil</a></li>
+                    <li><a href="arcadia_accueil.php">Retour vers la page d'accueil</a></li>
                     <li><a href="arcadia_habitats.php">Accès à tous les habitats</a></li>
                     <li><a href="arcadia_services.php">Accès à tous les services</a></li>
                     <li><a href="arcadia_contact.html">Contact</a></li>
