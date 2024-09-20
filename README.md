@@ -19,7 +19,8 @@ git clone https://github.com/monpseudo/arcadia_zoo.git
 1.	Créer la base de données :
 
 Ouvrez MySQL Workbench et exécutez le fichier SQL fourni dans le répertoire `/sql` pour créer la base de données. Utilisez le script suivant (modifiez le nom de la base de données si nécessaire) :
-CREATE DATABASE arcadia_db;
+
+    CREATE DATABASE arcadia_db;
 
 ## Importer les données
 
