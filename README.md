@@ -19,6 +19,12 @@ git clone https://github.com/davidoog/arcadia_zoo.git
 (Si problème avec Git qui n'est pas reconnue, utiliser git bash)
 
 
+!! IMPORTANT, si le fichier "arcadia_db.sql n'est pas présent lors du clonage, il faudras le télécharger manuellement:
+Allez sur GitHub, ouvrez le fichier arcadia_db.sql.
+Cliquez sur le bouton "Raw" pour voir le contenu brut du fichier.
+Faites un clic droit et sélectionnez "Enregistrer sous..." pour sauvegarder le fichier sur votre ordinateur.
+Étape 3 : Ajouter le fichier manuellement dans votre projet local
+Une fois le fichier téléchargé manuellement, placez-le dans le bon répertoire de votre projet
 
 ## Choix 1	Créer la base de données avec MySQL Workbench :
 
