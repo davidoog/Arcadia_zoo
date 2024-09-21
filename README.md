@@ -20,13 +20,13 @@ git clone https://github.com/davidoog/arcadia_zoo.git
 
 
 
-Solution 1	Créer la base de données avec MySQL Workbench :
+## Choix 1	Créer la base de données avec MySQL Workbench :
 
 Ouvrez MySQL Workbench et exécutez le fichier SQL qui ce nomme "arcadia_db.sql" pour créer la base de données.
 
     CREATE DATABASE arcadia_db;
 
-Solution 2       Utiliser XAMPP
+## Choix 2       Utiliser XAMPP
 
 Ouvrez XAMPP Control Panel et démarrez Apache et MySQL.
 Ensuite, ouvrez un navigateur et accédez à phpMyAdmin en saisissant cette URL : http://localhost/phpmyadmin.
