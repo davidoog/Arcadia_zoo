@@ -63,6 +63,8 @@ Cliquez sur Exécuter pour importer le fichier SQL et créer les tables avec les
 ## Télécharger Mongodb
 
  Utiliser ce lien https://github.com/mongodb/mongo-php-driver
+ cliquer ensuite sur latest à droite et choisissez ce fichier : "php_mongodb-1.19.4-8.2-ts-x86.zip" puis télécharger le 
+ 
 
  Ouvrez-le et placer le fichier php_mongodb.dll dans le dossier xampp/php/ext 
 
