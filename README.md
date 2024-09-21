@@ -60,20 +60,20 @@ Allez dans l'onglet Importer.
 Cliquez sur Parcourir, puis choisissez le fichier SQL (arcadia_db.sql) situé dans le répertoire /sql de votre projet.
 Cliquez sur Exécuter pour importer le fichier SQL et créer les tables avec les données.
 
-## Télécharger Mongodb
+## Téléchargez Mongodb
 
  Utiliser ce lien https://github.com/mongodb/mongo-php-driver
- cliquer ensuite sur latest à droite et choisissez ce fichier : "php_mongodb-1.19.4-8.2-ts-x86.zip" puis télécharger le 
+ cliquer ensuite sur latest à droite et choisissez ce fichier : "php_mongodb-1.19.4-8.2-ts-x86.zip" puis téléchargez le 
  
 
- Ouvrez-le et placer le fichier php_mongodb.dll dans le dossier xampp/php/ext 
+ Ouvrez-le et placez le fichier php_mongodb.dll dans le dossier xampp/php/ext 
 
 ## Modifier le fichier php.ini
 
   Lancer le fichier php.ini qui se trouve dans le dossier xampp/php
-  Chercher les ligne extension=...   Puis rajotuer en bas la ligne suivante : extension=mongodb    
+  Chercher les ligne extension=...   Puis ajouter en bas la ligne suivante : extension=mongodb    
   
-  Puis enregistrer le fichier
+  Puis enregistrez le fichier
 
 ## Configuration de l'environnement
 
