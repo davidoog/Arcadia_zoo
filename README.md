@@ -71,8 +71,9 @@ Cliquez sur Exécuter pour importer le fichier SQL et créer les tables avec les
 ## Modifier le fichier php.ini
 
   Lancer le fichier php.ini qui se trouve dans le dossier xampp/php
-  Chercher les ligne extension=...   Puis rajotuer en bas la ligne suivante : extension=mongodb
-  Enregistrer le fichier
+  Chercher les ligne extension=...   Puis rajotuer en bas la ligne suivante : extension=mongodb    
+  
+  Puis enregistrer le fichier
 
 ## Configuration de l'environnement
 
