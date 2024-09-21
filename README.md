@@ -16,6 +16,8 @@ Clonez le dépôt Git en utilisant la commande suivante :
 
 git clone https://github.com/davidoog/arcadia_zoo.git
 
+(Si problème avec Git qui n'est pas reconnue, utiliser git bash)
+
 
 
 1.	Créer la base de données :
