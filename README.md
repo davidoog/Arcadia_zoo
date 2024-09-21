@@ -20,21 +20,35 @@ git clone https://github.com/davidoog/arcadia_zoo.git
 
 
 
-1.	Créer la base de données :
+Solution 1	Créer la base de données avec MySQL Workbench :
 
-Ouvrez MySQL Workbench et exécutez le fichier SQL fourni dans le répertoire `/sql` pour créer la base de données. Utilisez le script suivant (modifiez le nom de la base de données si nécessaire) :
+Ouvrez MySQL Workbench et exécutez le fichier SQL qui ce nomme "arcadia_db.sql" pour créer la base de données.
 
     CREATE DATABASE arcadia_db;
+
+Solution 2       Utiliser XAMPP
+
+Ouvrez XAMPP Control Panel et démarrez Apache et MySQL.
+Ensuite, ouvrez un navigateur et accédez à phpMyAdmin en saisissant cette URL : http://localhost/phpmyadmin.
 
 ## Importer les données
 
 2. **Importer les données :**
 
-   Dans MySQL Workbench, ouvrez votre base de données `arcadia_db` que vous venez de créer. Ensuite, importez le fichier SQL d'intégration de données (par exemple, `data_integration.sql`) en utilisant la fonction d'importation :
+Soltion avec MySQL Workbench
+
+   Dans MySQL Workbench, ouvrez votre base de données `arcadia_db` que vous venez de créer. Ensuite, importez le fichier SQL d'intégration de données (arcadia_db.sql) en utilisant la fonction d'importation :
 
    - Cliquez avec le bouton droit sur votre base de données dans l'arborescence.
    - Sélectionnez "Run SQL Script" ou "Exécuter un script SQL".
    - Choisissez votre fichier SQL et exécutez-le.
+
+Solution avec XAMPP
+
+  Sélectionnez votre base de données arcadia_db dans la liste à gauche.
+Allez dans l'onglet Importer.
+Cliquez sur Parcourir, puis choisissez le fichier SQL (arcadia_db.sql) situé dans le répertoire /sql de votre projet.
+Cliquez sur Exécuter pour importer le fichier SQL et créer les tables avec les données.
 
 ## Configuration de l'environnement
 
