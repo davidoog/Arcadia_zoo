@@ -8,7 +8,7 @@ Avant de lancer l'application en local, assurez-vous d'avoir les éléments suiv
 
 - [XAMPP](https://www.apachefriends.org/index.html) ou un autre serveur local pour exécuter PHP
 - [MySQL Workbench](https://www.mysql.com/products/workbench/) pour gérer la base de données
-- [git pour Windows] (https://git-scm.com/download/win)
+- [git pour Windows](https://git-scm.com/download/win)
 
 ## Cloner le dépôt
 
