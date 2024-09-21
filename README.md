@@ -16,7 +16,9 @@ Clonez le dépôt Git en utilisant la commande suivante :
 
 git clone https://github.com/davidoog/arcadia_zoo.git
 
-(Si problème avec Git qui n'est pas reconnue, utiliser git bash)
+(utiliser git bash)
+
+
 
 
 !! IMPORTANT, si le fichier "arcadia_db.sql n'est pas présent lors du clonage, il faudras le télécharger manuellement:
@@ -37,6 +39,8 @@ Ouvrez MySQL Workbench et exécutez le fichier SQL qui ce nomme "arcadia_db.sql"
 Ouvrez XAMPP Control Panel et démarrez Apache et MySQL.
 Ensuite, ouvrez un navigateur et accédez à phpMyAdmin en saisissant cette URL : http://localhost/phpmyadmin.
 
+Placer le projet dans le dossier hdocs de Xampp
+
 ## Importer les données
 
 2. **Importer les données :**
@@ -55,6 +59,18 @@ Solution avec XAMPP
 Allez dans l'onglet Importer.
 Cliquez sur Parcourir, puis choisissez le fichier SQL (arcadia_db.sql) situé dans le répertoire /sql de votre projet.
 Cliquez sur Exécuter pour importer le fichier SQL et créer les tables avec les données.
+
+## Télécharger Mongodb
+
+ Utiliser ce lien https://github.com/mongodb/mongo-php-driver
+
+ Ouvrez-le et placer le fichier php_mongodb.dll dans le dossier xampp/php/ext 
+
+## Modifier le fichier php.ini
+
+  Lancer le fichier php.ini qui se trouve dans le dossier xampp/php
+  Chercher les ligne extension=...   Puis rajotuer en bas la ligne suivante : extension=mongodb
+  Enregistrer le fichier
 
 ## Configuration de l'environnement
 
