@@ -35,7 +35,7 @@ Ensuite, ouvrez un navigateur et accédez à phpMyAdmin en saisissant cette URL 
 
 2. **Importer les données :**
 
-Soltion avec MySQL Workbench
+Solution avec MySQL Workbench
 
    Dans MySQL Workbench, ouvrez votre base de données `arcadia_db` que vous venez de créer. Ensuite, importez le fichier SQL d'intégration de données (arcadia_db.sql) en utilisant la fonction d'importation :
 
