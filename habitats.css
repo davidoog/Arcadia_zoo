@@ -233,7 +233,7 @@ html, body { /* Style de base */
 }
 
 .hero-section {
-    background-image: url('./image/image-fond-guepard-habitat.png');
+    background-image: url('./image/image-guepard-habitat.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
