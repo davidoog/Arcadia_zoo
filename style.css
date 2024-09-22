@@ -27,7 +27,6 @@
 .side-menu {
     display: block;
     height: 100%;
-    
     width: 0;
     position: fixed;
     top: 50%;
@@ -344,7 +343,7 @@ html, body { /* Style de base */
     
 }
 
-.péroquet_accueil {
+.peroquet_accueil {
     width: 24vw; 
     height: auto; 
     position: absolute; 
@@ -361,7 +360,7 @@ html, body { /* Style de base */
     left: 70vw;
 }
 
-.guépard_accueil {
+.guepard_accueil {
     width: 60vw;
     height: auto;
     position: absolute;
@@ -433,7 +432,7 @@ html, body { /* Style de base */
     width: 55vw;
 }
 
-.éléphant_accueil {
+.elephant_accueil {
     position: absolute;
     bottom: -208vh;
     left: 0;
@@ -618,7 +617,7 @@ html, body { /* Style de base */
         top: 5.5rem;
     }
 
-    .péroquet_accueil {
+    .peroquet_accueil {
         width: 42vw;
         left: 3vw;
         top: 10vh;
@@ -696,7 +695,7 @@ html, body { /* Style de base */
         padding: 0.2rem;
     }
 
-    .guépard_accueil {
+    .guepard_accueil {
         display: none;
     }
 
@@ -735,7 +734,7 @@ html, body { /* Style de base */
         right: 0vw;
     }
 
-    .éléphant_accueil {
+    .elephant_accueil {
         bottom: -295vh;
         width: 100vw;
     }
@@ -848,7 +847,7 @@ html, body { /* Style de base */
         top: 5.5rem;
     }
 
-    .péroquet_accueil {
+    .peroquet_accueil {
         width: 42vw;
         left: 3vw;
         top: 10vh;
@@ -927,7 +926,7 @@ html, body { /* Style de base */
         padding: 0.2rem;
     }
 
-    .guépard_accueil {
+    .guepard_accueil {
         display: none;
     }
 
@@ -972,7 +971,7 @@ html, body { /* Style de base */
         right: 0vw;
     }
 
-    .éléphant_accueil {
+    .elephant_accueil {
         bottom: -220vh;
         width: 62vw;
     }

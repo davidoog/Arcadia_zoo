@@ -47,7 +47,7 @@ $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
     </header>
     
     <main>
-        <img src="./image/péroquet_1.png" alt="péroquet" class="péroquet_accueil">
+        <img src="./image/peroquet_1.png" alt="péroquet" class="peroquet_accueil">
         <img src="./image/singe_accueil.png" alt="singe" class="singe_accueil">
 
         <div class="hero-section">
@@ -62,7 +62,7 @@ $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
         </div>
 
         <img src="./image/button-arrow.png" alt="button-arrow" class="button-arrow">
-        <img src="./image/guépard.png" alt="guépard" class="guépard_accueil">
+        <img src="./image/guepard.png" alt="guepard" class="guepard_accueil">
         <img src="./image/oiseau2_accueil.png" alt="oiseau" class="oiseau2_accueil">
         <img src="./image/tigre_accueil.png" alt="tigre" class="tigre_accueil" id="tigre-accueil">
         <img src="./image/tortue_accueil.png" alt="tortue" class="tortue_accueil">
@@ -108,7 +108,7 @@ $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
                 <div class="icone-avis">💬</div>
             </div>
         </div>
-        <img src="./image/éléphant_accueil.png" alt="éléphants" class="éléphant_accueil">    
+        <img src="./image/elephant_accueil.png" alt="elephants" class="elephant_accueil">    
     </footer>
 
     <script src="accueil.js"></script>
