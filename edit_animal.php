@@ -15,24 +15,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $image_path = $animal['image'];
 
     // Gestion de l'image (si une nouvelle image est uploadée)
+    // Gestion de l'image (si une nouvelle image est uploadée)
     if (!empty($_FILES['image']['name'])) {
-        $target_dir = "image/";
+        $target_dir = "image/"; // Remplacez "uploads/" par "image/"
         $target_file = $target_dir . basename($_FILES["image"]["name"]);
         $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-        // Vérifier si le fichier est une image
+    // Vérifier si le fichier est une image
         $check = getimagesize($_FILES["image"]["tmp_name"]);
         if ($check !== false) {
             if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                // Mettre à jour l'image si l'upload a réussi
-                $image_path = $target_file;
-            } else {
-                echo "Erreur lors du téléchargement de l'image.";
-            }
+            // Mettre à jour l'image si l'upload a réussi
+            $image_path = $target_file;
         } else {
-            echo "Le fichier sélectionné n'est pas une image valide.";
+            echo "Erreur lors du téléchargement de l'image.";
         }
+    } else {
+        echo "Le fichier sélectionné n'est pas une image valide.";
     }
+}
 
     // Mise à jour dans la base de données avec ou sans nouvelle image
     $stmt = $pdo->prepare("UPDATE animals SET name=?, race=?, habitat=?, health=?, food=?, food_quantity=?, food_unit=?, image=? WHERE id=?");
