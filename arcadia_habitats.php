@@ -86,14 +86,14 @@ $all_habitats = $habitats->fetchAll();
                     <!-- PHP POUR LES ANIMAUX DE LA BDD (FUTUR AJOUT) -->
                     <?php foreach ($savane as $animal): ?>
                         <div class="animal-item">
-                        <div class="animal-item">
+                        
                             <div class="animal-card" onclick="showAnimalDetails('<?php echo $animal['name']; ?>')">
                                 <img src="<?php echo $animal['image']; ?>" alt="<?php echo $animal['race']; ?>">
                                 <p><strong>Prénom :</strong> <?php echo $animal['name']; ?></p>
                                 <p><strong>Race :</strong> <?php echo $animal['race']; ?></p>
                                 <p><strong>Habitat :</strong> <?php echo $animal['habitat']; ?></p>
                             </div>
-                        </div>
+                        
                             <div id="details-<?php echo $animal['name']; ?>" class="animal-details hidden">
                                 <p><strong>État de l'animal :</strong> <?php echo $animal['health']; ?></p>
                                 <p><strong>Nourriture proposée :</strong> <?php echo $animal['food']; ?></p>

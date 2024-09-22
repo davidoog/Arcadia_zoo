@@ -43,7 +43,7 @@ html, body {
     position: absolute;
     top: 1.5vh;
     left: 1.5vw;
-    z-index: 1000; /* Assurez-vous qu'il est au-dessus d'autres éléments */
+    z-index: 1000; 
     cursor: pointer;
 }
 
@@ -79,18 +79,18 @@ html, body { /* Style de base */
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(199, 205, 185, 0.55); /* Couleur de fond avec 55% de transparence */
+    background-color: rgba(199, 205, 185, 0.55); 
     z-index: 1000;
 }
 
-.topbar .menu { /* Menu de navigation */
+.topbar .menu { 
     width: 100%;
 }
 
 .topbar .menu ul {
     display: flex;
-    justify-content: space-between; /* Espacement entre les éléments */
-    list-style-type: none; /* Supprime les puces de la liste */
+    justify-content: space-between; 
+    list-style-type: none; 
     margin: 0;
     padding: 0;
     width: 100%;
@@ -142,7 +142,7 @@ html, body { /* Style de base */
 
 
 .topbar .menu ul li a:hover {
-    text-decoration: underline; /* Soulignement au survol */
+    text-decoration: underline; 
 }
 
 .small-logo {
@@ -246,7 +246,7 @@ html, body { /* Style de base */
     align-items: center;
     text-align: center;
     box-sizing: border-box;
-    overflow: hidden; /* Important pour contenir l'effet de zoom */
+    overflow: hidden; 
     position: relative;
 }
 
@@ -260,7 +260,7 @@ html, body { /* Style de base */
     position: absolute;
     top: 0;
     left: 0;
-    z-index: -1; /* S'assurer que l'image est en arrière-plan */
+    z-index: -1; 
     animation: zoomBackground 20s infinite alternate;
 }
 
@@ -280,9 +280,9 @@ html, body { /* Style de base */
     font-style: italic;
     -webkit-text-stroke: 1.6px #000000;
     text-shadow: 
-        1px 1px 0px black,  /* Ombre en bas à droite */
-        -1px 1px 0px black, /* Ombre en bas à gauche */
-        1px -1px 0px black, /* Ombre en haut à droite */
+        1px 1px 0px black,  
+        -1px 1px 0px black, 
+        1px -1px 0px black, 
         -1px -1px 0px black;
     margin-bottom: 2.5rem;
 }
@@ -310,7 +310,7 @@ html, body { /* Style de base */
 
 .habitat img {
     cursor: pointer;
-    transition: transform 0.3s ease; /* Transition douce pour l'effet de zoom */
+    transition: transform 0.3s ease; 
 }
 
 .habitat img:hover {
@@ -323,7 +323,7 @@ html, body { /* Style de base */
     background-color: #F8F4EC;
     padding: 50px;
     margin: 130px auto;
-    width: 90%; /* Ajuster la largeur selon ce que tu souhaites */
+    width: 90%; 
     border-radius: 15px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 50px;
@@ -339,11 +339,11 @@ html, body { /* Style de base */
  }
 
 .animal-list {
-    width: 55%; /* La liste des animaux occupe 50% de la largeur */
+    width: 55%; 
 }
 
 .animal-details-container {
-    width: 48%; /* La colonne des détails occupe 40% de la largeur */
+    width: 48%; 
     background-color: #F0E3CF;
     padding: 15px;
     border-radius: 8px;
@@ -353,26 +353,26 @@ html, body { /* Style de base */
 }
 
 .arbre-container {
-    position: absolute; /* Absolue pour le positionner par rapport à .animal-container */
-    top: 50px; /* Ajuster la distance du haut */
-    right: 20px; /* Ajuster la distance de droite */
-    width: 50%; /* Ajuste la taille de l'image */
+    position: absolute;
+    top: 50px; 
+    right: 20px; 
+    width: 50%; 
     height: auto;
 }
 
 .oiseau-container {
-    position: absolute; /* Absolue pour le positionner par rapport à .animal-container */
-    top: 50px; /* Ajuster la distance du haut */
-    right: 20px; /* Ajuster la distance de droite */
-    width: 50%; /* Ajuste la taille de l'image */
+    position: absolute; 
+    top: 50px; 
+    right: 20px; 
+    width: 50%; 
     height: auto;
 }
 
 .tortue-container {
-    position: absolute; /* Absolue pour le positionner par rapport à .animal-container */
-    top: 50px; /* Ajuster la distance du haut */
-    right: 20px; /* Ajuster la distance de droite */
-    width: 50%; /* Ajuste la taille de l'image */
+    position: absolute; 
+    top: 50px; 
+    right: 20px; 
+    width: 50%; 
     height: auto;
 }
 
@@ -402,17 +402,17 @@ html, body { /* Style de base */
 
 .animal-card {
     cursor: pointer;
-    width: 50%; /* Chaque carte occupe 48% de la largeur pour un affichage en deux colonnes */
+    width: 50%; 
     background-color: #F5F5DC;
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease; /* Transition douce pour l'effet de zoom */
+    transition: transform 0.3s ease; 
 }
 
 .animal-card img {
-    width: 100%; /* L'image prend toute la largeur de la carte */
+    width: 100%; 
     height: auto;
     display: block;
     margin-bottom: 10px;
@@ -421,7 +421,7 @@ html, body { /* Style de base */
 }
 
 .animal-card:hover {
-    transform: scale(1.1); /* Agrandit l'image de 10% lors du survol */
+    transform: scale(1.1); 
 }
 
 .animal-details {
@@ -434,11 +434,11 @@ html, body { /* Style de base */
 
 .animal-item {
     display: flex;
-    flex-direction: column; /* Disposer les éléments verticalement (image + texte) */
-    justify-content: center; /* Centrer verticalement */
-    align-items: center; /* Centrer horizontalement */
-    text-align: center; /* Centrer le texte */
-    margin-bottom: 20px; /* Espace entre chaque animal */
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+    margin-bottom: 20px; 
     margin-left: 4em;
 }
 
@@ -471,13 +471,13 @@ html, body { /* Style de base */
     }
     
     .hero-section {
-        height: 60vh; /* Réduction de la hauteur pour les petits écrans */
-        background-position: top; /* Ajuster l'image en fonction du contenu visible */
-        padding: 20px; /* Espacement pour éviter que le contenu touche les bords */
+        height: 60vh; 
+        background-position: top; 
+        padding: 20px; 
     }
 
     .menu ul li {
-        display: none; /* Masquer le menu complet */
+        display: none; 
     }
 
     
@@ -501,9 +501,9 @@ html, body { /* Style de base */
         font-size: 1.9rem;
         -webkit-text-stroke: 1px #000000;
     text-shadow: 
-        1px 1px 0px black,  /* Ombre en bas à droite */
-        -1px 1px 0px black, /* Ombre en bas à gauche */
-        1px -1px 0px black, /* Ombre en haut à droite */
+        1px 1px 0px black,  
+        -1px 1px 0px black, 
+        1px -1px 0px black, 
         -1px -1px 0px black;
     }
 }
