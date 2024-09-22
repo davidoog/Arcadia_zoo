@@ -90,21 +90,34 @@ Cliquez sur Exécuter pour importer le fichier SQL et créer les tables avec les
 
 ## Lancer le serveur
 
-1. **Démarrer le serveur :**
+Pour les utilisateurs de Windows avec XAMPP :
 
-   Ouvrez un terminal, placez-vous dans le dossier de votre projet et lancez un serveur PHP local avec la commande suivante :
-   ```bash
+1. Assurez-vous que XAMPP est installé et que PHP se trouve dans C:\xampp\php\.
+2. Ouvrez PowerShell ou l'invite de commandes.
+3. Allez dans le répertoire du projet :
+   cd C:\chemin\vers\ton\projet
+
+5. Lancez le serveur PHP en spécifiant le chemin complet vers php.exe :
+   C:\xampp\php\php.exe -S localhost:8000
+
+
+
+
+Pour les utilisateurs avec PHP dans leur PATH (Linux/macOS/Windows) :
+
+1. Ouvrez un terminal ou PowerShell.
+2. Allez dans le répertoire du projet :
    cd /chemin/vers/ton/projet
+
+3. Lancez le serveur :
    php -S localhost:8000
 
-Cela démarrera un serveur PHP local sur l’adresse http://localhost:8000.
-
+   
 
 
 # Accéder à l'application 
 Ouvrez votre navigateur web et saisissez l’URL suivante :
-	
- 	http://localhost:8000
+    http://localhost:8000
 
 
 ## Présentation de l'application
