@@ -35,8 +35,26 @@ $all_habitats = $habitats->fetchAll();
 </head>
 
 <body>
-    <header>
+<header>
         <div class="topbar">
+            <div class="menu-icon" id="menu-icon">
+                <div class="menu-hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="side-menu" id="side-menu">
+                <ul>
+                    <li><a href="arcadia_accueil.php">Accueil</a></li>
+                    <li><a href="arcadia_habitats.php">Habitats</a></li>
+                    <li><a href="arcadia_services.php">Services</a></li>
+                    <li><a href="arcadia_contact.html">Contact</a></li>
+                    <li><a href="arcadia_connexion.html">Connexion</a></li>
+                </ul>
+            </div>
+
             <div class="menu">
                 <ul>
                     <li><a href="arcadia_accueil.php">Retour vers la page d'accueil</a></li>

@@ -13,6 +13,49 @@
     src: url('./fonts/Roboto-Regular.ttf') format('truetype');
 }
 
+/* Style des détails de l'animal */
+.animal-details {
+    background-color: #F0E3CF;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 80%; /* Limite la largeur à 80% du conteneur parent */
+    margin: 20px auto; /* Centre le bloc des détails */
+    text-align: left; /* Alignement à gauche pour mieux présenter les détails */
+}
+
+/* Style pour limiter la hauteur de la carte */
+.animal-card {
+    width: 100%; /* Chaque carte prend toute la largeur de son conteneur */
+    margin: auto;
+    padding: 10px; /* Réduction de padding pour compacter */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #f8f8f8;
+}
+
+/* Réduire l'espace sous l'image */
+.animal-card img {
+    width: 100%; /* S'assure que l'image prend toute la largeur de la carte */
+    height: auto;
+    max-height: 250px; /* Limite la hauteur maximale de l'image */
+    object-fit: cover; /* Maintient les proportions sans déformation */
+    border-radius: 10px;
+}
+
+.animal-item {
+    max-width: 600px; /* Limite la largeur de chaque bloc animal */
+    margin: 0 auto; /* Centre le bloc sur la page */
+    padding: 20px;
+    text-align: center;
+}
+
+.animal-list {
+    display: flex;
+    flex-direction: column; /* Pour que les animaux s'empilent verticalement */
+    align-items: center; /* Centre les éléments horizontalement */
+}
+
 .login-mobile {
     display: none;
 }
@@ -38,12 +81,13 @@ html, body {
     z-index: 1000;
 }
 
+/* Styles pour l'icône du menu hamburger */
 .menu-icon {
     display: none; /* Masqué par défaut */
     position: absolute;
     top: 1.5vh;
     left: 1.5vw;
-    z-index: 1000; 
+    z-index: 1000; /* Assurez-vous qu'il est au-dessus d'autres éléments */
     cursor: pointer;
 }
 
@@ -54,12 +98,62 @@ html, body {
     width: 30px;
     height: 20px;
 }
-
 .menu-hamburger span {
     display: block;
     width: 100%;
     height: 0.3vw;
     background-color: black;
+}
+
+.side-menu {
+    display: block;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 50%;
+    
+    left: 0;
+    background-color: rgba(199, 205, 185, 0.95);
+    z-index: 1001;
+    overflow-x: hidden;
+    transition: width 0.5s ease, left 0.5s ease; /* Transition pour l'animation */
+    padding-top: 60px;
+}
+
+
+.side-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.side-menu ul li {
+    padding: 10px 15px;
+    text-align: left;
+}
+
+.side-menu ul li a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+    display: block;
+    transition: 0.3s;
+}
+
+.side-menu ul li a:hover {
+    color: #A0724D;
+}
+
+/* Affiche le menu latéral ouvert */
+.side-menu.open {
+    left: 0;
+    width: 250px;
+}
+
+/* Transition pour cacher le menu vers la droite */
+.side-menu.closing {
+    left: -250px; /* Le menu glisse vers la gauche pour se cacher */
+    
 }
 
 html, body { /* Style de base */
@@ -301,22 +395,31 @@ html, body { /* Style de base */
 
 .habitat {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Centre les images */
     align-items: center;
     box-sizing: border-box;
     width: 100%;
     padding: 0 1em;
+    gap: 30px; /* Ajoute un espace de 30px entre chaque image */
 }
 
 .habitat img {
+    max-width: 100%; /* S'assure que l'image ne dépasse pas l'écran */
+    margin: 10px;
     cursor: pointer;
-    transition: transform 0.3s ease; 
+    transition: transform 0.3s ease;
+    border-radius: 15px; /* Ajoute des bords arrondis pour un effet visuel */
 }
 
 .habitat img:hover {
+    transform: scale(1.05); /* Légère mise à l'échelle au survol */
     cursor: pointer;
     transform: scale(1.1);
 }
+
+
+
+
 
 .animal-container {
     position: relative;
@@ -338,8 +441,9 @@ html, body { /* Style de base */
 
  }
 
-.animal-list {
-    width: 55%; 
+ .animal-list {
+    width: 100%; /* Laisse l'animal-list prendre toute la largeur pour mobile */
+    margin-top: 20px;
 }
 
 .animal-details-container {
@@ -402,22 +506,19 @@ html, body { /* Style de base */
 
 .animal-card {
     cursor: pointer;
-    width: 50%; 
+    width: 100%; 
     background-color: #F5F5DC;
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 10px;
+    margin: 1rem 0;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease; 
 }
 
 .animal-card img {
-    width: 100%; 
+    max-width: 100%;
     height: auto;
-    display: block;
-    margin-bottom: 10px;
-    
-    
 }
 
 .animal-card:hover {
@@ -433,13 +534,8 @@ html, body { /* Style de base */
 
 
 .animal-item {
-    display: flex;
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center; 
-    text-align: center; 
-    margin-bottom: 20px; 
-    margin-left: 4em;
+    flex: 1 1 100%; /* Assure que chaque animal prend toute la largeur sur mobile */
+    text-align: center; /* Centre les informations */
 }
 
 
@@ -489,7 +585,70 @@ html, body { /* Style de base */
     }
     
     .menu-icon {
-        display: block; /* Afficher le menu hamburger */
+        display: block;
+        position: absolute;
+        top: 1.5vh;
+        left: 1.5vw;
+        z-index: 1002;
+        cursor: pointer;
+    }
+
+    .side-menu {
+        display: block;
+        height: 100%;
+        width: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(199, 205, 185, 0.95);
+        z-index: 1001;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+
+    .side-menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .side-menu ul li {
+        padding: 10px 15px;
+        text-align: left;
+    }
+
+    .side-menu ul li a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+        display: block;
+        transition: 0.3s;
+    }
+
+    .side-menu ul li a:hover {
+        color: #A0724D;
+    }
+
+    /* Menu latéral ouvert prend 250px de largeur */
+    .side-menu.open {
+        width: 250px;
+    }
+
+    .menu-hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 30px;
+        height: 25px;
+    }
+
+    .menu-hamburger span {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: black;
+        transition: 0.4s;
     }
 
     .topbar {
@@ -497,13 +656,36 @@ html, body { /* Style de base */
         padding: 0.2rem;
     }
 
-    .titre-habitat {
-        font-size: 1.9rem;
-        -webkit-text-stroke: 1px #000000;
-    text-shadow: 
-        1px 1px 0px black,  
-        -1px 1px 0px black, 
-        1px -1px 0px black, 
-        -1px -1px 0px black;
+    .title-habitat {
+        display: block;
+        text-align: center;
+        padding: 1rem;
     }
-}
+
+    .titre-habitat {
+        display: block;
+        font-size: 2rem;
+    }
+
+    
+    .habitat img {
+        width: 90%; /* Augmente la taille des images à 90% de la largeur du conteneur */
+        max-width: 400px; /* Limite la taille maximale pour éviter qu'elles ne deviennent trop grandes */
+        height: auto; /* Conserve les proportions des images */
+        margin: 0 auto; /* Centre les images */
+    }
+
+    .habitat {
+        display: block; /* Pour que les habitats soient alignés verticalement */
+        margin-bottom: 20px; /* Ajoute un espace entre chaque habitat */
+        text-align: center;
+        width: 100%;
+        max-width: none; 
+        height: auto; 
+        margin-bottom: 20px; 
+    }
+   
+    }
+
+    
+    
