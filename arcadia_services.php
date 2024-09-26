@@ -32,7 +32,7 @@ $services = $pdo->query("SELECT * FROM services")->fetchAll();
                     <li><a href="arcadia_habitats.php">Habitats</a></li>
                     <li><a href="arcadia_services.php">Services</a></li>
                     <li><a href="arcadia_contact.html">Contact</a></li>
-                    <li><a href="arcadia_connexion.html">Connexion</a></li>
+                    <li><a href="arcadia_connexion.php">Connexion</a></li>
                 </ul>
             </div>
 
@@ -42,7 +42,7 @@ $services = $pdo->query("SELECT * FROM services")->fetchAll();
                     <li><a href="arcadia_habitats.php">Accès à tous les habitats</a></li>
                     <li><a href="arcadia_services.php">Accès à tous les services</a></li>
                     <li><a href="arcadia_contact.html">Contact</a></li>
-                    <li class="connexion"><a href="arcadia_connexion.html" class="btn btn-primary">Connexion</a></li>
+                    <li class="connexion"><a href="arcadia_connexion.php" class="btn btn-primary">Connexion</a></li>
                 </ul>
             </div>
         </div>

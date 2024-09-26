@@ -244,96 +244,88 @@ html, body { /* Style de base */
     background-color: #FEFEEF;
     border-radius: 2.1875rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 17.25rem;
-    max-width: 37.5rem;
-    width: 20%;
+    padding: 9rem;
+
+    width: 100%;
+    max-width: 40rem;
     margin: 0 auto; 
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center; /* Ajout d'alignement centré */
     position: relative;
-    top: 15vh; /* Ajuste la position verticale selon le besoin */
+    top: 15vh;
+    text-align: center;
+}
+
+.small-Arcadia-connexion {
+    top: -13vh;
+    display: flex;
+    position: relative;
 }
 
 .small-logo-connexion {
     position: absolute;
     z-index: 100;
-    top: -50px;
-    left: 40%;
-    padding: 0 auto;
-
+    top: -15px;
+    left: 49%;
+    transform: translateX(-50%);
+    padding: 0;
 }
 
-.section-connexion .small-lettre-z-connexion { /* Style de la petite lettre "Z" */
-    -webkit-text-stroke: 1px, black;
+.section-connexion .small-lettre-z-connexion, 
+.section-connexion .small-lettre-o1-connexion, 
+.section-connexion .small-lettre-o2-connexion {
+    font-family: 'Libre Baskerville';
+    font-size: 3.5rem;
+    -webkit-text-stroke: 1px black;
     color: #98A9A3;
-    font-size: 50px;
-    font-weight: normal;
-    margin-bottom: 20px;
-    font-family: 'libre baskerville';
-    position: absolute;
-    top: 50px;
-    left: 15px;
-
+    margin: 0;
+    display: inline-block;
+    text-align: center;
+    letter-spacing: -0.3em;
 }
 
-.section-connexion .small-lettre-o1-connexion { /* Style de la première petite lettre "O" */
-    -webkit-text-stroke: 1px, black;
+.section-connexion .small-lettre-z-connexion {
+    color: #FFFFFF;
+}
+
+.section-connexion .small-lettre-o1-connexion {
     color: #BEBFB8;
-    font-size: 50px;
-    font-weight: normal;
-    margin-bottom: 20px;
-    font-family: 'libre baskerville';
-    position: absolute;
-    top: 50px;
-    left: 40px;
-
 }
 
-.section-connexion .small-lettre-o2-connexion { /* Style de la deuxième petite lettre "O" */
-    -webkit-text-stroke: 1px, black;
+.section-connexion .small-lettre-o2-connexion {
     color: #98A9A3;
-    font-size: 50px;
-    font-weight: normal;
-    margin-bottom: 20px;
-    font-family: 'libre baskerville';
-    position: absolute;
-    top: 50px;
-    left: 57px;
-
 }
 
-.section-connexion .small-Arcadia-connexion { /* Style du texte "Arcadia" */
+.section-connexion .small-Arcadia-connexion {
     font-family: 'Nerko One';
-    font-size: 20px;
+    font-size: 1.5rem;
     color: #DDCFCF;
-    border: 1px solid black;
-    border-radius: 50px;
     background-color: black;
-    padding: 1px 10px;
-    position: absolute;
-    top: 105px;
-    left: 10px;
-    z-index: 100;
-    
+    padding: 3px 15px;
+    border-radius: 20px;
+    margin-top: 10px;
+    display: block;
 }
+
+
 
 .titre-connexion {
     font-family: 'Georgia';
-    font-size: 1.7rem;
-    font-weight: 1;
-    position: absolute;
-    top: 25%;
-    left: 30%;
-
+    font-size: 1.8rem;
+    font-style: italic;
+    margin-top: 30px;
+    text-align: center;
+    position: relative;
+    top: -5vh;
 }
 
 .login {
-    width: 90%;
-    position: absolute;
-    left: 2em;
-    padding: 0 auto;
-    top: 32%;
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .login input {
@@ -341,32 +333,70 @@ html, body { /* Style de base */
     border-radius: 2.25rem;
     padding: 16px 20px;
     background-color: #D9D9D9;
-    box-sizing: border-box;
     border: none;
-    font-size: 20px;
-
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
 }
+
+
+
+
 
 #password {
     margin-top: 1em;
 }
 
-.btn-custom {
-    width: 350px;
-    margin: 0 auto;
+input[type="text"], input[type="password"] {
+    width: 100%;
+    max-width: 600px;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 30px; 
+    border: none;
+    background-color: #E6E6E6; 
+    color: #2C3E50; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 20px; 
+    box-sizing: border-box;
     display: block;
-    margin-top: 40px;
+}
+
+input[type="text"]::placeholder, input[type="password"]::placeholder {
+    color: #B0B0B0; 
+    font-size: 1.1rem;
+    font-family: 'Roboto', sans-serif; 
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    border: none;
+    background-color: black;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #333; 
 }
 
 .info-connexion {
-    font-size: 1.2rem;
+    font-size: 0.9rem;
+    font-style: italic;
+    text-align: center;
     font-family: 'Roboto';
+    margin-top: 1rem;
 }
 
 
 @media (max-width: 767px) {
     .menu ul li {
-        display: none; /* Masquer le menu complet */
+        display: none; 
     }
 
     
@@ -526,7 +556,7 @@ html, body { /* Style de base */
 @media (min-width: 768px) and (max-width: 1281px) {
     
     .menu ul li {
-        display: none; /* Masquer le menu complet */
+        display: none; 
     }
 
     

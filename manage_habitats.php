@@ -17,6 +17,7 @@ $habitats = $stmt->fetchAll();
     <div class="container mt-5">
         <h1>Liste des Habitats</h1>
         <a href="add_habitat.php" class="btn btn-success mb-3">Ajouter un habitat</a>
+        <a href="admin_dashboard.php" class="btn btn-secondary">Retour au tableau de bord</a>
         <table class="table">
             <thead>
                 <tr>
