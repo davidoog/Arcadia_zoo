@@ -9,7 +9,7 @@ session_start();
 // Vérifier si l'utilisateur est connecté et a le rôle 'admin'
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     // Rediriger si l'utilisateur n'est pas admin
-    header('Location: arcadia_connexion.html');
+    header('Location: arcadia_connexion.php');
     exit();
 }
 

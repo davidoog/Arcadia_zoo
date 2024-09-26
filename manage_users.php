@@ -49,6 +49,7 @@ $users = $stmt->fetchAll();
             </tbody>
         </table>
         <a href="add_user.php" class="btn btn-success">Ajouter un utilisateur</a>
+        <a href="admin_dashboard.php" class="btn btn-secondary">Retour au tableau de bord</a>
     </div>
 </body>
 </html>
