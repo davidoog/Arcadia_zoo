@@ -1,7 +1,12 @@
 <?php
 session_start();
-require 'db.php'; // Connexion à la base de données
-require 'mongo_connection.php'; // Connexion à MongoDB
+require_once 'db.php';  // Inclure la connexion à la base de données via db.php
+
+// Connexion à la base de données via la classe Database
+$db = new Database(); // 
+$pdo = $db->getConnection(); // Récupération de l'objet PDO
+
+require 'mongo_connection.php'; // Connexion à MongoDB si nécessaire
 
 // Récupérer les animaux par habitat pour un affichage dynamique
 $savane_animals = $pdo->prepare("SELECT * FROM animals WHERE habitat = 'savane'");
@@ -20,7 +25,6 @@ $marais = $marais_animals->fetchAll();
 $habitats = $pdo->prepare("SELECT * FROM habitats");
 $habitats->execute();
 $all_habitats = $habitats->fetchAll();
-
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +64,7 @@ $all_habitats = $habitats->fetchAll();
                     <li><a href="arcadia_accueil.php">Retour vers la page d'accueil</a></li>
                     <li><a href="arcadia_habitats.php">Accès à tous les habitats</a></li>
                     <li><a href="arcadia_services.php">Accès à tous les services</a></li>
-                    <li><a href="arcadia_contact.hmtl">Contact</a></li>
+                    <li><a href="arcadia_contact.html">Contact</a></li>
                     <li class="connexion"><a href="arcadia_connexion.php" class="btn btn-primary">Connexion</a></li>
                 </ul>
             </div>

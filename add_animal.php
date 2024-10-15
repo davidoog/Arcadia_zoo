@@ -1,6 +1,11 @@
 <?php
 session_start();
-require 'db.php'; // Connexion à la base de données
+require_once 'db.php';
+require 'animal.php';
+
+// Connexion à la base de données
+$db = new Database();
+$pdo = $db->getConnection();
 
 // Vérifier si l'utilisateur est admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -8,52 +13,37 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
+// Gestion de l'ajout d'un animal
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $race = $_POST['race'];
     $habitat = $_POST['habitat'];
     $health = $_POST['health'];
     $food = $_POST['food'];
-    $food_quantity = floatval($_POST['food_quantity']); // Convertir en nombre flottant
-    $food_unit = $_POST['food_unit']; // Récupérer l'unité (kg ou g)
+    $food_quantity = floatval($_POST['food_quantity']);
+    $food_unit = $_POST['food_unit'];
     $last_checkup = $_POST['last_checkup'];
 
-    // Dossier où les images seront uploadées
+    // Gestion de l'upload de l'image
     $upload_dir = 'uploads/';
-    
-    // Créer le dossier s'il n'existe pas
     if (!is_dir($upload_dir)) {
         mkdir($upload_dir, 0777, true);
     }
-    
-    // Gestion de l'upload de l'image
+
     $image_path = '';
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $image_path = $upload_dir . basename($_FILES['image']['name']);
-        
-        // Vérifier si l'upload réussit
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $image_path)) {
             echo "Erreur lors du téléchargement de l'image.";
             exit();
         }
     }
 
-    // Insertion de l'animal dans la base de données
-    $stmt = $pdo->prepare("INSERT INTO animals (name, race, habitat, health, food, food_quantity, food_unit, last_checkup, image) 
-                           VALUES (:name, :race, :habitat, :health, :food, :food_quantity, :food_unit, :last_checkup, :image)");
-    $stmt->execute([
-        'name' => $name,
-        'race' => $race,
-        'habitat' => $habitat,
-        'health' => $health,
-        'food' => $food,
-        'food_quantity' => $food_quantity, // Insérer comme un nombre flottant
-        'food_unit' => $food_unit, // Insérer l'unité séparée (kg ou g)
-        'last_checkup' => $last_checkup,
-        'image' => $image_path
-    ]);
+    // Ajouter l'animal avec la classe Animal
+    $animalManager = new Animal($pdo);
+    $animalManager->addAnimal($name, $race, $habitat, $health, $food, $food_quantity, $food_unit, $last_checkup, $image_path);
 
-    // Redirection vers le tableau de bord admin après l'ajout
+    // Redirection vers la page de gestion des animaux
     header('Location: manage_animals.php');
     exit();
 }

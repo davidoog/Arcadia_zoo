@@ -1,9 +1,15 @@
 <?php
-// Connexion à la base de données MySQL uniquement
-require 'db.php';
-
-// Démarrage de la session
 session_start();
+// Connexion à la base de données MySQL uniquement
+require_once 'db.php';
+require 'init.php';
+
+// Connexion à la base de données via la classe Database
+$db = new Database();  // Créer une instance de la classe Database
+$pdo = $db->getConnection(); // Récupérer l'objet PDO
+
+
+
 
 // Vérification du rôle admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {

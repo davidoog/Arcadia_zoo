@@ -1,6 +1,10 @@
 <?php
 session_start();
-require 'db.php'; // Connexion à la base de données
+require_once 'db.php'; // Connexion à la base de données
+
+// Connexion à la base de données via la classe Database
+$db = new Database();  // Créer une instance de la classe Database
+$pdo = $db->getConnection(); // Récupérer l'objet PDO
 
 // Vérifier si l'utilisateur est admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {

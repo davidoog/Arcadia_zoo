@@ -1,5 +1,21 @@
 <?php
-require 'db.php'; // Connexion à la base de données
+session_start();
+require_once 'db.php'; // Connexion à la base de données
+require 'Habitat.php'; // Inclusion de la classe Habitat
+require 'Service.php'; // Inclusion de la classe Service
+
+// Connexion à la base de données via la classe Database
+$db = new Database();  // Créer une instance de la classe Database
+$pdo = $db->getConnection(); // Récupérer l'objet PDO
+
+// Créer une instance de la classe Habitat
+$habitatObj = new Habitat($pdo);
+
+// Créer une instance de la classe Service
+$serviceObj = new Service($pdo);
+
+// Récupérer tous les services via la méthode de la classe
+$services = $serviceObj->getAllServices();
 
 // Récupérer les habitats depuis la base de données
 $stmt = $pdo->query("SELECT * FROM habitats");

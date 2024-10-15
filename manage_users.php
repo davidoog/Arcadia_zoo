@@ -1,6 +1,10 @@
 <?php
 session_start();
-require 'db.php'; // Connexion à la base de données
+require_once 'db.php'; // Connexion à la base de données
+
+// Connexion à la base de données via la classe Database
+$db = new Database();  // Créer une instance de la classe Database
+$pdo = $db->getConnection(); // Récupérer l'objet PDO
 
 // Vérifier si l'utilisateur est admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -42,7 +46,9 @@ $users = $stmt->fetchAll();
                         <td><?php echo htmlspecialchars($user['role']); ?></td>
                         <td>
                             <a href="edit_user.php?id=<?php echo $user['id']; ?>" class="btn btn-warning">Modifier</a>
-                            <a href="delete_user.php?id=<?php echo $user['id']; ?>" class="btn btn-danger">Supprimer</a>
+                            <?php if ($user['role'] !== 'admin'): // Ne pas afficher le bouton Supprimer pour les admins ?>
+                                <a href="delete_user.php?id=<?php echo $user['id']; ?>" class="btn btn-danger">Supprimer</a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

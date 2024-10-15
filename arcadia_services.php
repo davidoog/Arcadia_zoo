@@ -1,9 +1,17 @@
 <?php
 session_start(); // Démarre la session
-require 'db.php';
+require_once 'db.php';
+require 'Service.php'; //inclusion de la classe Service
 
-// Récupérer tous les services depuis la base de données
-$services = $pdo->query("SELECT * FROM services")->fetchAll();
+// Connexion à la base de données via la classe Database
+$db = new Database();  // Créer une instance de la classe Database
+$pdo = $db->getConnection(); // Récupérer l'objet PDO
+
+// Créer une instance de la classe Service
+$serviceManager = new Service($pdo);
+
+// Récupérer tous les services
+$services = $serviceManager->getAllServices();
 ?>
 
 <!DOCTYPE html>

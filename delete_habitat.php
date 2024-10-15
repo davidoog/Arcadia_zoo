@@ -1,6 +1,10 @@
 <?php
 // Connexion à la base de données
-require 'db.php';
+require_once 'db.php';
+
+// Connexion à la base de données via la classe Database
+$db = new Database();  // Créer une instance de la classe Database
+$pdo = $db->getConnection(); // Récupérer l'objet PDO
 
 // Vérifier si l'ID est bien passé en paramètre dans l'URL
 if (isset($_GET['id'])) {

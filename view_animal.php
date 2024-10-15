@@ -1,7 +1,7 @@
 <?php
 session_start();
 require 'mongo_connection.php'; // Inclusion de la connexion MongoDB
-require 'db.php'; // Connexion à la base de données relationnelle pour récupérer l'animal
+require_once 'db.php'; // Connexion à la base de données relationnelle pour récupérer l'animal
 
 // Vérifier si un animal est cliqué
 if (isset($_GET['animal_name'])) {

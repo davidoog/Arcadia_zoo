@@ -1,5 +1,10 @@
 <?php
-require 'db.php';
+require_once 'db.php';
+
+// Connexion à la base de données via la classe Database
+$db = new Database();  // Créer une instance de la classe Database
+$pdo = $db->getConnection(); // Récupérer l'objet PDO 
+
 $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
 ?>
 

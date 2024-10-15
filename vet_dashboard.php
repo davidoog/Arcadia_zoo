@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'db.php'; // Connexion à la base de données
+require_once 'db.php'; // Connexion à la base de données
 require 'mongo_connection.php'; // Connexion à MongoDB (pour les consultations et les aliments)
 
 // Vérifier si l'utilisateur est un vétérinaire

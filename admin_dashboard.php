@@ -1,10 +1,12 @@
 <?php
-
-// Connexion à la base de données et récupération des données
-require 'mongo_connection.php'; // Connexion à MongoDB
-require 'db.php'; // Connexion à la base MySQL
-
 session_start();
+// Connexion à MongoDB
+require 'mongo_connection.php'; // Connexion à MongoDB
+require_once 'db.php'; // Connexion à la base MySQL
+
+// Connexion à la base de données via la classe Database
+$db = new Database();  
+$pdo = $db->getConnection();  // Récupérer l'objet PDO
 
 // Vérifier si l'utilisateur est connecté et a le rôle 'admin'
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -14,8 +16,16 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
 }
 
 try {
-    $visits = $collection->find(); // Trouver toutes les visites dans MongoDB
-    $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch(); // Récupérer les horaires
+    // Connexion à MongoDB et sélection de la collection Animals_visits
+    $client = new MongoDB\Client("mongodb://localhost:27017");
+    $mongoDb = $client->Zoo_Arcadia; // Sélectionner la base de données Zoo_Arcadia
+    $collection = $mongoDb->selectCollection('Animals_visits'); // Sélectionner la collection Animals_visits
+
+    // Récupérer toutes les visites
+    $visits = $collection->find();
+
+    // Récupérer les horaires depuis MySQL
+    $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch(); 
 } catch (Exception $e) {
     echo "Erreur lors de la récupération des données : " . $e->getMessage();
 }
@@ -103,10 +113,11 @@ try {
 
         
 
-<script src="manage_services.js"></script>
+
 
     </main>
-
-    <script src="script.js"></script>
+    <script src="admin20.js"></script>
+    <script src="manage_services.js"></script>
+    
 </body>
 </html>

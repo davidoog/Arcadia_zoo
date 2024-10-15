@@ -2,6 +2,10 @@
 session_start();
 require 'db.php'; 
 
+// Connexion à la base de données via la classe Database
+$db = new Database();  // Créer une instance de la classe Database
+$pdo = $db->getConnection(); // Récupérer l'objet PDO
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = htmlspecialchars(trim($_POST['username']));
     $password = trim($_POST['password']);

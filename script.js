@@ -24,6 +24,29 @@ const showAnimals = (habitat) => {
     }
 };
 
+// Sélection de l'élément menu-icon
+const element = document.getElementById('menu-icon');
+
+if (element) {
+    // Ajoute un écouteur pour le clic sur le menu-icon
+    element.addEventListener('click', function(e) {
+        e.stopPropagation(); // Empêche la propagation du clic
+
+        const sideMenu = document.getElementById('side-menu');
+        
+        // Toggle pour afficher ou cacher le menu
+        if (sideMenu.classList.contains('open')) {
+            sideMenu.classList.remove('open');
+            sideMenu.classList.add('closing'); // Ajouter l'animation pour fermer
+        } else {
+            sideMenu.classList.remove('closing');
+            sideMenu.classList.add('open'); // Ajouter l'animation pour ouvrir
+        }
+    });
+} else {
+    console.error("Élément avec l'ID 'menu-icon' introuvable.");
+}
+
 // Ouvre/ferme le menu latéral en cliquant sur le menu hamburger
 document.getElementById('menu-icon').addEventListener('click', function(e) {
     e.stopPropagation(); // Empêche la propagation du clic à d'autres éléments
@@ -102,49 +125,5 @@ function showAnimalDetails(animal) {
     }
 }
 
-document.getElementById('resetButton').addEventListener('click', function () {
-    fetch('reset_visits.php', {
-        method: 'POST'
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            alert(data.message); // Afficher un message de succès
 
-            // Supprimer les phrases de consultation
-            const consultationText = document.querySelectorAll('.consultation-info');
-            consultationText.forEach(info => info.textContent = ''); // Effacer le texte
 
-        } else {
-            alert('Erreur : ' + data.message); // Afficher le message d'erreur
-        }
-    })
-    .catch(error => {
-        console.error('Erreur lors de la réinitialisation:', error);
-        alert('Erreur lors de la réinitialisation');
-    });
-});
-
-document.getElementById('updateHoursForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    let openingHour = document.getElementById('opening_hour').value;
-    let closingHour = document.getElementById('closing_hour').value;
-
-    fetch('update_hours.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `opening_hour=${openingHour}&closing_hour=${closingHour}`
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            alert(data.message);
-        } else {
-            alert('Erreur : ' + data.message);
-        }
-    })
-    .catch(error => console.error('Erreur lors de la mise à jour:', error));
-});

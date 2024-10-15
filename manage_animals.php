@@ -1,5 +1,16 @@
 <?php
-require 'db.php';
+session_start();
+require_once 'db.php';
+
+// Connexion à la base de données via la classe Database
+$db = new Database();  // Créer une instance de la classe Database
+$pdo = $db->getConnection(); // Récupérer l'objet PDO
+
+// Vérifier si l'utilisateur est admin
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header('Location: arcadia_connexion.html');
+    exit();
+} 
 
 // Récupération des animaux
 $animals = $pdo->prepare("SELECT * FROM animals");

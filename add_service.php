@@ -1,5 +1,9 @@
 <?php
-require 'db.php';
+require_once 'db.php';
+
+// Connexion à la base de données via la classe Database
+$db = new Database();  
+$pdo = $db->getConnection();  // Récupérer l'objet PDO
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupérer les valeurs du formulaire
