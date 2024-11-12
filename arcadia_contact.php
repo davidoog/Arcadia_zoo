@@ -7,11 +7,10 @@ require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-if (!isset($_ENV['HEROKU_ENV'])) { // ou utilisez une autre variable qui distingue votre environnement
-    if (file_exists(__DIR__ . '/.env')) {
-        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-        $dotenv->load();
-    }
+// Vérification si nous sommes en local et chargement des variables d'environnement si nécessaire
+if (getenv('HEROKU_ENV') === false) {
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
 }
 
 $message = ''; // Pour afficher les messages à l'utilisateur après la soumission
@@ -30,30 +29,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = "L'adresse email n'est pas valide.";
     } else {
         // Envoi de l'email au zoo avec PHPMailer
-            $mail = new PHPMailer(true);
-    try {
-        // Configuration du serveur SMTP
-        $mail->isSMTP();
-        $mail->SMTPDebug = 2; // Niveau de débogage
-        $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
-        $mail->Host = $_ENV['EMAIL_HOST'];
-        $mail->SMTPAuth = true;
-        $mail->Username = $_ENV['EMAIL_USERNAME'];
-        $mail->Password = $_ENV['EMAIL_PASSWORD'];
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
-        $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail = new PHPMailer(true);
+        try {
+            // Configuration du serveur SMTP
+            $mail->isSMTP();
+            $mail->SMTPDebug = 2; // Niveau de débogage
+            $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
+            $mail->Host = $_ENV['EMAIL_HOST'];
+            $mail->SMTPAuth = true;
+            $mail->Username = $_ENV['EMAIL_USERNAME'];
+            $mail->Password = $_ENV['EMAIL_PASSWORD'];
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
+            $mail->Port = $_ENV['EMAIL_PORT'];
 
-        // Configuration de l'email
-        $mail->setFrom($email, 'Visiteur Zoo Arcadia');
-        $mail->addAddress('contactarcadia.supp@gmail.com'); // Email de destination
-        $mail->Subject = $subject;
-        $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
+            // Configuration de l'email
+            $mail->setFrom($email, 'Visiteur Zoo Arcadia');
+            $mail->addAddress('contactarcadia.supp@gmail.com'); // Email de destination
+            $mail->Subject = $subject;
+            $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
 
-        $mail->send();
-        $message = "Votre demande a été envoyée avec succès.";
-    } catch (Exception $e) {
-        $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
-    }
+            $mail->send();
+            $message = "Votre demande a été envoyée avec succès.";
+        } catch (Exception $e) {
+            $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
+        }
+            }
+        
 }
 ?>
 <!DOCTYPE html>
@@ -124,4 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@​⬤
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="contact.js"></script>
+</body>
+</html>
