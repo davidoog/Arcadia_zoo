@@ -7,9 +7,8 @@ require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Chargement des variables d'environnement en local uniquement
-if (!isset($_ENV['HEROKU_ENV'])) {
-    // Nous ne sommes pas sur Heroku, chargeons le fichier .env
+// Vérification si nous sommes en local et chargement des variables d'environnement si nécessaire
+if (getenv('HEROKU_ENV') === false) {
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
     $dotenv->load();
 }
@@ -34,12 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             // Configuration du serveur SMTP
             $mail->isSMTP();
-            $mail->Host = $_ENV['EMAIL_HOST'];
+            $mail->Host = getenv('EMAIL_HOST') ?: $_ENV['EMAIL_HOST'];
             $mail->SMTPAuth = true;
-            $mail->Username = $_ENV['EMAIL_USERNAME'];
-            $mail->Password = $_ENV['EMAIL_PASSWORD'];
+            $mail->Username = getenv('EMAIL_USERNAME') ?: $_ENV['EMAIL_USERNAME'];
+            $mail->Password = getenv('EMAIL_PASSWORD') ?: $_ENV['EMAIL_PASSWORD'];
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
-            $mail->Port = $_ENV['EMAIL_PORT'];
+            $mail->Port = getenv('EMAIL_PORT') ?: $_ENV['EMAIL_PORT'];
 
             // Configuration de l'email
             $mail->setFrom($email, 'Visiteur Zoo Arcadia');
@@ -123,8 +122,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script src="contact.js"></script>
-</body>
-</html>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@​⬤
