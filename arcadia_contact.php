@@ -4,16 +4,15 @@ session_start();
 require_once 'db.php'; // Connexion à la base de données
 require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 
-// Chargement des variables d'environnement
- $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
- $dotenv->load();
-
- // Debug temporaire pour voir si les variables sont chargées
-var_dump($_ENV['EMAIL_USERNAME']);
-var_dump($_ENV['EMAIL_PASSWORD']);
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
+// Chargement des variables d'environnement en local uniquement
+if (!isset($_ENV['HEROKU_ENV'])) {
+    // Nous ne sommes pas sur Heroku, chargeons le fichier .env
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
+}
 
 $message = ''; // Pour afficher les messages à l'utilisateur après la soumission
 
