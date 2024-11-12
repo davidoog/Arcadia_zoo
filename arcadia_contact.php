@@ -4,6 +4,10 @@ session_start();
 require_once 'db.php'; // Connexion à la base de données
 require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 
+// Chargement des variables d'environnement
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -35,12 +39,12 @@ $mail = new PHPMailer(true);
 try {
     // Configuration du serveur SMTP
     $mail->isSMTP();
-    $mail->Host = 'smtp.yourmailprovider.com'; // Remplacez par l'hôte de votre fournisseur
+    $mail->Host = $_ENV['EMAIL_HOST'];
     $mail->SMTPAuth = true;
-    $mail->Username = 'your-email@example.com'; // Remplacez par votre email
-    $mail->Password = 'your-email-password'; // Remplacez par votre mot de passe
+    $mail->Username = $_ENV['EMAIL_USERNAME'];
+    $mail->Password = $_ENV['EMAIL_PASSWORD'];
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
-    $mail->Port = 587; // 465 pour SSL ou 587 pour TLS
+    $mail->Port = $_ENV['EMAIL_PORT'];
 
     // Configuration de l'email
     $mail->setFrom($email, 'Visiteur Zoo Arcadia');
