@@ -5,8 +5,8 @@ require_once 'db.php'; // Connexion à la base de données
 require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 
 // Chargement des variables d'environnement
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+// $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+// $dotenv->load();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
