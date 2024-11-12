@@ -14,8 +14,13 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Vérifiez que la requête est bien POST
+//if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+    //header('Location: arcadia_contact.php'); // Redirige vers la page de contact
+    //exit;
+//}
+
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    header('Location: arcadia_contact.php'); // Redirige vers la page de contact
+    echo "Accès direct interdit.";
     exit;
 }
 
