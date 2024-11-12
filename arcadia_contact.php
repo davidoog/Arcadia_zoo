@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit(); // Arrête le script ici pour afficher les valeurs
 
         // Envoi de l'email au zoo avec PHPMailer
-                $mail = new PHPMailer(true);
+        $mail = new PHPMailer(true);
         try {
             // Configuration du serveur SMTP
             $mail->isSMTP();
@@ -58,6 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } catch (Exception $e) {
             $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
         }
+    }
 }
 ?>
 
