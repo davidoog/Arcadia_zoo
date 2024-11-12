@@ -7,13 +7,8 @@ require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Vérification si nous sommes en local et chargement des variables d'environnement si nécessaire
-if (getenv('HEROKU_ENV') === false) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
-}
-
-$message = ''; // Pour afficher les messages à l'utilisateur après la soumission
+// Message initial pour l'affichage
+$message = ''; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sécurisation et validation des données
@@ -28,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Validation de l'email
         $message = "L'adresse email n'est pas valide.";
     } else {
-        // Vérification des variables d'environnement
+        // Vérification des variables d'environnement (pour débogage)
         var_dump($_ENV['MAIL_HOST']);
         var_dump($_ENV['EMAIL_USERNAME']);
         var_dump($_ENV['EMAIL_PASSWORD']);
@@ -42,12 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->isSMTP();
             $mail->SMTPDebug = 2; // Niveau de débogage
             $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
-            $mail->Host = $_ENV['MAIL_HOST'];
+            $mail->Host = $_ENV['MAIL_HOST']; // Récupération de la variable d'environnement
             $mail->SMTPAuth = true;
-            $mail->Username = $_ENV['EMAIL_USERNAME'];
-            $mail->Password = $_ENV['EMAIL_PASSWORD'];
+            $mail->Username = $_ENV['EMAIL_USERNAME']; // Récupération de la variable d'environnement
+            $mail->Password = $_ENV['EMAIL_PASSWORD']; // Récupération de la variable d'environnement
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
-            $mail->Port = $_ENV['MAIL_PORT'];
+            $mail->Port = $_ENV['MAIL_PORT']; // Récupération de la variable d'environnement
 
             // Configuration de l'email
             $mail->setFrom($email, 'Visiteur Zoo Arcadia');
