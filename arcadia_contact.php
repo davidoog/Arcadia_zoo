@@ -30,28 +30,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = "L'adresse email n'est pas valide.";
     } else {
         // Envoi de l'email au zoo avec PHPMailer
-        $mail = new PHPMailer(true);
-        try {
-            // Configuration du serveur SMTP
-            $mail->isSMTP();
-            $mail->Host = getenv('EMAIL_HOST') ?: $_ENV['EMAIL_HOST'];
-            $mail->SMTPAuth = true;
-            $mail->Username = getenv('EMAIL_USERNAME') ?: $_ENV['EMAIL_USERNAME'];
-            $mail->Password = getenv('EMAIL_PASSWORD') ?: $_ENV['EMAIL_PASSWORD'];
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
-            $mail->Port = getenv('EMAIL_PORT') ?: $_ENV['EMAIL_PORT'];
+            $mail = new PHPMailer(true);
+    try {
+        // Configuration du serveur SMTP
+        $mail->isSMTP();
+        $mail->SMTPDebug = 2; // Niveau de débogage
+        $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
+        $mail->Host = $_ENV['EMAIL_HOST'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['EMAIL_USERNAME'];
+        $mail->Password = $_ENV['EMAIL_PASSWORD'];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
+        $mail->Port = $_ENV['EMAIL_PORT'];
 
-            // Configuration de l'email
-            $mail->setFrom($email, 'Visiteur Zoo Arcadia');
-            $mail->addAddress('contactarcadia.supp@gmail.com'); // Email de destination
-            $mail->Subject = $subject;
-            $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
+        // Configuration de l'email
+        $mail->setFrom($email, 'Visiteur Zoo Arcadia');
+        $mail->addAddress('contactarcadia.supp@gmail.com'); // Email de destination
+        $mail->Subject = $subject;
+        $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
 
-            $mail->send();
-            $message = "Votre demande a été envoyée avec succès.";
-        } catch (Exception $e) {
-            $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
-        }
+        $mail->send();
+        $message = "Votre demande a été envoyée avec succès.";
+    } catch (Exception $e) {
+        $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
     }
 }
 ?>
