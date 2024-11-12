@@ -24,11 +24,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = "L'adresse email n'est pas valide.";
     } else {
         // Vérification des variables d'environnement (pour débogage)
-        var_dump($_ENV['MAIL_HOST']);
-        var_dump($_ENV['EMAIL_USERNAME']);
-        var_dump($_ENV['EMAIL_PASSWORD']);
-        var_dump($_ENV['MAIL_PORT']);
-        exit(); // Arrête le script ici pour afficher les valeurs
+        var_dump($_ENV['MAIL_HOST']);    // Affiche le serveur SMTP
+        var_dump($_ENV['EMAIL_USERNAME']); // Affiche l'email du compte
+        var_dump($_ENV['EMAIL_PASSWORD']); // Affiche le mot de passe du compte
+        var_dump($_ENV['MAIL_PORT']);    // Affiche le port utilisé
+        // Supprimer exit() pour continuer l'exécution
+        // exit(); // Arrêter le script ici pour afficher les valeurs (retirer ceci une fois débogué)
 
         // Envoi de l'email au zoo avec PHPMailer
         $mail = new PHPMailer(true);
