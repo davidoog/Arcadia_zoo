@@ -4,65 +4,59 @@ session_start();
 require_once 'db.php'; // Connexion à la base de données
 require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 
-// Chargement des variables d'environnement si le fichier .env existe
-if (file_exists(__DIR__ . '/.env')) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
-}
+// Chargement des variables d'environnement
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Vérifiez que la requête est bien POST
-//if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    //header('Location: arcadia_contact.php'); // Redirige vers la page de contact
-    //exit;
-//}
+// Vérification de la méthode de requête
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Sécurisation et validation des données
+    $subject = trim($_POST['subject']);
+    $description = trim($_POST['description']);
+    $email = trim($_POST['email']);
 
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-    echo "Accès direct interdit.";
+    // Vérification des champs
+    if (empty($subject) || empty($description) || empty($email)) {
+        echo "Tous les champs sont obligatoires.";
+        exit;
+    }
+
+    // Validation de l'email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "L'adresse email n'est pas valide.";
+        exit;
+    }
+
+    // Envoi de l'email au zoo avec PHPMailer
+    $mail = new PHPMailer(true);
+    try {
+        // Configuration du serveur SMTP
+        $mail->isSMTP();
+        $mail->Host = $_ENV['EMAIL_HOST'];
+        $mail->SMTPAuth = true;
+        $mail->Username = $_ENV['EMAIL_USERNAME'];
+        $mail->Password = $_ENV['EMAIL_PASSWORD'];
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
+        $mail->Port = $_ENV['EMAIL_PORT'];
+
+        // Configuration de l'email
+        $mail->setFrom($email, 'Visiteur Zoo Arcadia');
+        $mail->addAddress('contactarcadia.supp@gmail.com'); // Email de destination
+        $mail->Subject = $subject;
+        $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
+
+        $mail->send();
+        echo "Votre demande a été envoyée avec succès.";
+    } catch (Exception $e) {
+        echo "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
+    }
+} else {
+    // Affichage d'un message ou d'un formulaire alternatif pour les accès directs
+    echo "Merci de soumettre le formulaire pour accéder à cette page.";
     exit;
-}
-
-// Sécurisation et validation des données
-$subject = trim($_POST['subject']);
-$description = trim($_POST['description']);
-$email = trim($_POST['email']);
-
-// Vérification des champs
-if (empty($subject) || empty($description) || empty($email)) {
-    echo "Tous les champs sont obligatoires.";
-    exit;
-}
-
-// Validation de l'email
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    echo "L'adresse email n'est pas valide.";
-    exit;
-}
-
-// Envoi de l'email au zoo avec PHPMailer
-$mail = new PHPMailer(true);
-try {
-    // Configuration du serveur SMTP
-    $mail->isSMTP();
-    $mail->Host = getenv('EMAIL_HOST');
-    $mail->SMTPAuth = true;
-    $mail->Username = getenv('EMAIL_USERNAME');
-    $mail->Password = getenv('EMAIL_PASSWORD');
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
-    $mail->Port = getenv('EMAIL_PORT');
-
-    // Configuration de l'email
-    $mail->setFrom($email, 'Visiteur Zoo Arcadia');
-    $mail->addAddress('contactarcadia.supp@gmail.com'); // Email de destination
-    $mail->Subject = $subject;
-    $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
-
-    $mail->send();
-    echo "Votre demande a été envoyée avec succès.";
-} catch (Exception $e) {
-    echo "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
 }
 ?>
 <!DOCTYPE html>
