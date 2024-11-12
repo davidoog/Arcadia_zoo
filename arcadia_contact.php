@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             // Configuration du serveur SMTP
             $mail->isSMTP();
-            $mail->SMTPDebug = 2; // Niveau de débogage
+            $mail->SMTPDebug = 3; // Niveau de débogage
             $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
 
             // Utilisation des variables d'environnement
