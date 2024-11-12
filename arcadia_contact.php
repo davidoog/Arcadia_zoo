@@ -31,18 +31,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit(); // Arrête le script ici pour afficher les valeurs
 
         // Envoi de l'email au zoo avec PHPMailer
-        $mail = new PHPMailer(true);
+                $mail = new PHPMailer(true);
         try {
             // Configuration du serveur SMTP
             $mail->isSMTP();
             $mail->SMTPDebug = 2; // Niveau de débogage
             $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
-            $mail->Host = $_ENV['MAIL_HOST']; // Récupération de la variable d'environnement
+
+            // Utilisation des variables d'environnement
+            $mail->Host = $_ENV['MAIL_HOST'];  // Vérifiez que cette variable est correctement définie dans Heroku
             $mail->SMTPAuth = true;
-            $mail->Username = $_ENV['EMAIL_USERNAME']; // Récupération de la variable d'environnement
-            $mail->Password = $_ENV['EMAIL_PASSWORD']; // Récupération de la variable d'environnement
+            $mail->Username = $_ENV['EMAIL_USERNAME']; // Votre nom d'utilisateur (email) pour le serveur SMTP
+            $mail->Password = $_ENV['EMAIL_PASSWORD']; // Votre mot de passe ou mot de passe d'application pour le serveur SMTP
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
-            $mail->Port = $_ENV['MAIL_PORT']; // Récupération de la variable d'environnement
+            $mail->Port = $_ENV['MAIL_PORT']; // Assurez-vous que le port est correct (587 pour STARTTLS)
 
             // Configuration de l'email
             $mail->setFrom($email, 'Visiteur Zoo Arcadia');
@@ -50,12 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Subject = $subject;
             $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
 
+            // Envoi de l'email
             $mail->send();
             $message = "Votre demande a été envoyée avec succès.";
         } catch (Exception $e) {
             $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
         }
-    }
 }
 ?>
 
