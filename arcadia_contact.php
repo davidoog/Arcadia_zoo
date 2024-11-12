@@ -29,10 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = "L'adresse email n'est pas valide.";
     } else {
         // Vérification des variables d'environnement
-        var_dump($_ENV['EMAIL_HOST']);
+        var_dump($_ENV['MAIL_HOST']);
         var_dump($_ENV['EMAIL_USERNAME']);
         var_dump($_ENV['EMAIL_PASSWORD']);
-        var_dump($_ENV['EMAIL_PORT']);
+        var_dump($_ENV['MAIL_PORT']);
         exit(); // Arrête le script ici pour afficher les valeurs
 
         // Envoi de l'email au zoo avec PHPMailer
@@ -42,12 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->isSMTP();
             $mail->SMTPDebug = 2; // Niveau de débogage
             $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
-            $mail->Host = $_ENV['EMAIL_HOST'];
+            $mail->Host = $_ENV['MAIL_HOST'];
             $mail->SMTPAuth = true;
             $mail->Username = $_ENV['EMAIL_USERNAME'];
             $mail->Password = $_ENV['EMAIL_PASSWORD'];
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
-            $mail->Port = $_ENV['EMAIL_PORT'];
+            $mail->Port = $_ENV['MAIL_PORT'];
 
             // Configuration de l'email
             $mail->setFrom($email, 'Visiteur Zoo Arcadia');
