@@ -5,13 +5,14 @@ require_once 'db.php'; // Connexion à la base de données
 require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 
 // Chargement des variables d'environnement
-// $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-// $dotenv->load();
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Vérification de la méthode de requête
+$message = ''; // Pour afficher les messages à l'utilisateur après la soumission
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sécurisation et validation des données
     $subject = trim($_POST['subject']);
@@ -20,43 +21,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Vérification des champs
     if (empty($subject) || empty($description) || empty($email)) {
-        echo "Tous les champs sont obligatoires.";
-        exit;
+        $message = "Tous les champs sont obligatoires.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        // Validation de l'email
+        $message = "L'adresse email n'est pas valide.";
+    } else {
+        // Envoi de l'email au zoo avec PHPMailer
+        $mail = new PHPMailer(true);
+        try {
+            // Configuration du serveur SMTP
+            $mail->isSMTP();
+            $mail->Host = $_ENV['EMAIL_HOST'];
+            $mail->SMTPAuth = true;
+            $mail->Username = $_ENV['EMAIL_USERNAME'];
+            $mail->Password = $_ENV['EMAIL_PASSWORD'];
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
+            $mail->Port = $_ENV['EMAIL_PORT'];
+
+            // Configuration de l'email
+            $mail->setFrom($email, 'Visiteur Zoo Arcadia');
+            $mail->addAddress('contactarcadia.supp@gmail.com'); // Email de destination
+            $mail->Subject = $subject;
+            $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
+
+            $mail->send();
+            $message = "Votre demande a été envoyée avec succès.";
+        } catch (Exception $e) {
+            $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
+        }
     }
-
-    // Validation de l'email
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "L'adresse email n'est pas valide.";
-        exit;
-    }
-
-    // Envoi de l'email au zoo avec PHPMailer
-    $mail = new PHPMailer(true);
-    try {
-        // Configuration du serveur SMTP
-        $mail->isSMTP();
-        $mail->Host = $_ENV['EMAIL_HOST'];
-        $mail->SMTPAuth = true;
-        $mail->Username = $_ENV['EMAIL_USERNAME'];
-        $mail->Password = $_ENV['EMAIL_PASSWORD'];
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
-        $mail->Port = $_ENV['EMAIL_PORT'];
-
-        // Configuration de l'email
-        $mail->setFrom($email, 'Visiteur Zoo Arcadia');
-        $mail->addAddress('contactarcadia.supp@gmail.com'); // Email de destination
-        $mail->Subject = $subject;
-        $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
-
-        $mail->send();
-        echo "Votre demande a été envoyée avec succès.";
-    } catch (Exception $e) {
-        echo "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
-    }
-} else {
-    // Affichage d'un message ou d'un formulaire alternatif pour les accès directs
-    echo "Merci de soumettre le formulaire pour accéder à cette page.";
-    exit;
 }
 ?>
 <!DOCTYPE html>
