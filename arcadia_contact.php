@@ -23,14 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Validation de l'email
         $message = "L'adresse email n'est pas valide.";
     } else {
-        // Vérification des variables d'environnement (pour débogage)
-        var_dump($_ENV['MAIL_HOST']);    // Affiche le serveur SMTP
-        var_dump($_ENV['EMAIL_USERNAME']); // Affiche l'email du compte
-        var_dump($_ENV['EMAIL_PASSWORD']); // Affiche le mot de passe du compte
-        var_dump($_ENV['MAIL_PORT']);    // Affiche le port utilisé
-        // Supprimer exit() pour continuer l'exécution
-        // exit(); // Arrêter le script ici pour afficher les valeurs (retirer ceci une fois débogué)
-
         // Envoi de l'email au zoo avec PHPMailer
         $mail = new PHPMailer(true);
         try {
@@ -39,13 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->SMTPDebug = 3; // Niveau de débogage
             $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
 
-            // Utilisation des variables d'environnement
-            $mail->Host = $_ENV['MAIL_HOST'];  // Vérifiez que cette variable est correctement définie dans Heroku
+            // Configuration SMTP sans utiliser 'sendmail'
+            $mail->Host = $_ENV['MAIL_HOST'];  // Assurez-vous que cette variable est correcte dans Heroku
             $mail->SMTPAuth = true;
             $mail->Username = $_ENV['EMAIL_USERNAME']; // Votre nom d'utilisateur (email) pour le serveur SMTP
             $mail->Password = $_ENV['EMAIL_PASSWORD']; // Votre mot de passe ou mot de passe d'application pour le serveur SMTP
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
-            $mail->Port = $_ENV['MAIL_PORT']; // Assurez-vous que le port est correct (587 pour STARTTLS)
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Utilisation de STARTTLS pour sécuriser la connexion
+            $mail->Port = $_ENV['MAIL_PORT']; // Le port SMTP (généralement 587 pour STARTTLS)
 
             // Configuration de l'email
             $mail->setFrom($email, 'Visiteur Zoo Arcadia');
@@ -57,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->send();
             $message = "Votre demande a été envoyée avec succès.";
         } catch (Exception $e) {
+            // Si une erreur survient, afficher l'erreur spécifique
             $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
         }
     }
@@ -129,6 +122,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button type="submit" class="btn btn-custom">Envoyer</button>
             </div>
         </form>
+
+        <!-- Message à l'utilisateur -->
+        <?php if (!empty($message)): ?>
+            <div class="alert alert-info mt-3"><?php echo $message; ?></div>
+        <?php endif; ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
