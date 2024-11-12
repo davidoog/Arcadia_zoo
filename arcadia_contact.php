@@ -7,10 +7,11 @@ require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Vérification si nous sommes en local et chargement des variables d'environnement si nécessaire
-if (getenv('HEROKU_ENV') === false) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
+if (!isset($_ENV['HEROKU_ENV'])) { // ou utilisez une autre variable qui distingue votre environnement
+    if (file_exists(__DIR__ . '/.env')) {
+        $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+        $dotenv->load();
+    }
 }
 
 $message = ''; // Pour afficher les messages à l'utilisateur après la soumission
