@@ -21,6 +21,7 @@ class ComposerStaticInitc93afe81b3718c111e178a14f390478c
         'P' => 
         array (
             'Psr\\Log\\' => 8,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'M' => 
         array (
@@ -40,6 +41,10 @@ class ComposerStaticInitc93afe81b3718c111e178a14f390478c
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'MongoDB\\' => 
         array (

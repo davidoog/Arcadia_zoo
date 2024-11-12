@@ -2,53 +2,56 @@
 // Démarrage de la session si nécessaire
 session_start();
 require_once 'db.php'; // Connexion à la base de données
+require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 
-// Inclusion du fichier de connexion à la base de données si vous enregistrez les messages
-require_once 'db.php'; // Assurez-vous que le fichier 'db.php' existe et fonctionne correctement
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 // Vérifiez que la requête est bien POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Sécurisation et validation des données
-    $subject = trim($_POST['subject']);
-    $description = trim($_POST['description']);
-    $email = trim($_POST['email']);
+if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+    header('Location: arcadia_contact.php'); // Redirige vers la page de contact
+    exit;
+}
 
-    // Vérification des champs
-    if (empty($subject) || empty($description) || empty($email)) {
-        echo "Tous les champs sont obligatoires.";
-        exit;
-    }
+// Sécurisation et validation des données
+$subject = trim($_POST['subject']);
+$description = trim($_POST['description']);
+$email = trim($_POST['email']);
 
-    // Validation de l'email
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "L'adresse email n'est pas valide.";
-        exit;
-    }
+// Vérification des champs
+if (empty($subject) || empty($description) || empty($email)) {
+    echo "Tous les champs sont obligatoires.";
+    exit;
+}
 
-    // Envoi de l'email au zoo
-    $to = "contactarcadia.supp@gmail.com"; 
-    $headers = "From: $email" . "\r\n" .
-               "Reply-To: $email" . "\r\n" .
-               "X-Mailer: PHP/" . phpversion();
+// Validation de l'email
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo "L'adresse email n'est pas valide.";
+    exit;
+}
 
-    $message = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
+// Envoi de l'email au zoo avec PHPMailer
+$mail = new PHPMailer(true);
+try {
+    // Configuration du serveur SMTP
+    $mail->isSMTP();
+    $mail->Host = 'smtp.yourmailprovider.com'; // Remplacez par l'hôte de votre fournisseur
+    $mail->SMTPAuth = true;
+    $mail->Username = 'your-email@example.com'; // Remplacez par votre email
+    $mail->Password = 'your-email-password'; // Remplacez par votre mot de passe
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // ou PHPMailer::ENCRYPTION_SMTPS pour SSL
+    $mail->Port = 587; // 465 pour SSL ou 587 pour TLS
 
-    // Envoi de l'email
-    if (mail($to, $subject, $message, $headers)) {
-        echo "Votre demande a été envoyée avec succès.";
-    } else {
-        echo "Une erreur est survenue lors de l'envoi de votre demande.";
-    }
+    // Configuration de l'email
+    $mail->setFrom($email, 'Visiteur Zoo Arcadia');
+    $mail->addAddress('contactarcadia.supp@gmail.com'); // Email de destination
+    $mail->Subject = $subject;
+    $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
 
-    // Optionnel : Enregistrement du message dans la base de données
-    /*
-    $db = new Database();
-    $pdo = $db->getConnection();
-    $stmt = $pdo->prepare("INSERT INTO contact_requests (subject, description, email) VALUES (?, ?, ?)");
-    $stmt->execute([$subject, $description, $email]);
-    */
-} else {
-    echo "Requête non valide.";
+    $mail->send();
+    echo "Votre demande a été envoyée avec succès.";
+} catch (Exception $e) {
+    echo "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
 }
 ?>
 
