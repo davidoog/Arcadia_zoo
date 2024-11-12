@@ -34,7 +34,7 @@ $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
                     <li><a href="arcadia_accueil.php">Accueil</a></li>
                     <li><a href="arcadia_habitats.php">Habitats</a></li>
                     <li><a href="arcadia_services.php">Services</a></li>
-                    <li><a href="arcadia_contact.html">Contact</a></li>
+                    <li><a href="arcadia_contact.php">Contact</a></li>
                     <li><a href="arcadia_connexion.php">Connexion</a></li>
                 </ul>
             </div>
@@ -44,7 +44,7 @@ $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
                     <li><a href="arcadia_accueil.php">Retour vers la page d'accueil</a></li>
                     <li><a href="arcadia_habitats.php">Accès à tous les habitats</a></li>
                     <li><a href="arcadia_services.php">Accès à tous les services</a></li>
-                    <li><a href="arcadia_contact.html">Contact</a></li>
+                    <li><a href="arcadia_contact.php">Contact</a></li>
                     <li class="connexion"><a href="arcadia_connexion.php" class="btn btn-primary">Connexion</a></li>
                 </ul>
             </div>
@@ -84,13 +84,7 @@ $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
     </main>
     
     <footer>
-        <div class="note-globale"> 
-            <p class="titre-note-globale">Note globale</p>
-            <p class="score-note-globale">9.7<span>/10</span></p>
-            <div class="etoiles-note-globale">
-                ★★★★★
-            </div>
-        </div>
+        
 
         <div class="section-avis">
             <div class="avis-visiteur">

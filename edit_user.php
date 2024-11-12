@@ -3,7 +3,7 @@ session_start();
 require_once 'db.php'; // Connexion à la base de données
 
 // Connexion à la base de données via la classe Database
-$db = new Database();  // Créer une instance de la classe Database
+$db = new Database();
 $pdo = $db->getConnection(); // Récupérer l'objet PDO
 
 // Vérifier si l'utilisateur est admin
@@ -33,16 +33,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $role = $_POST['role'];
 
+    // Préparer les paramètres pour la requête de mise à jour
+    $params = [
+        'username' => $username,
+        'role' => $role,
+        'id' => $id
+    ];
+
     // Vérifier si un nouveau mot de passe a été soumis
     if (!empty($_POST['password'])) {
-        $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-        $stmt = $pdo->prepare("UPDATE users SET username = :username, password = :password, role = :role WHERE id = :id");
-        $stmt->execute(['username' => $username, 'password' => $password, 'role' => $role, 'id' => $id]);
+        // Utiliser password_hash pour sécuriser le mot de passe
+        $params['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $query = "UPDATE users SET username = :username, password = :password, role = :role WHERE id = :id";
     } else {
-        $stmt = $pdo->prepare("UPDATE users SET username = :username, role = :role WHERE id = :id");
-        $stmt->execute(['username' => $username, 'role' => $role, 'id' => $id]);
+        $query = "UPDATE users SET username = :username, role = :role WHERE id = :id";
     }
 
+    // Exécuter la requête de mise à jour
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+
+    // Rediriger vers la page de gestion des utilisateurs
     header('Location: manage_users.php');
     exit();
 }
@@ -62,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="edit_user.php?id=<?php echo $id; ?>" method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Nom d'utilisateur</label>
-                <input type="text" class="form-control" id="username" name="username" value="<?php echo $user['username']; ?>" required>
+                <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Mot de passe (laisser vide pour ne pas changer)</label>

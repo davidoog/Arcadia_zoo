@@ -3,21 +3,34 @@ session_start();
 require_once 'db.php'; // Connexion à la base de données
 require 'mongo_connection.php'; // Connexion à MongoDB (pour les consultations et les aliments)
 
+// Créer une instance de la classe Database
+$db = new Database();
+$pdo = $db->getConnection(); // Récupérer l'objet PDO
+
 // Vérifier si l'utilisateur est un vétérinaire
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'vet') {
     header('Location: arcadia_connexion.html');
     exit();
 }
 
+// Générer un token CSRF si celui-ci n'existe pas encore
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Récupération des animaux et des habitats
 try {
     $animals = $pdo->query("SELECT * FROM animals")->fetchAll();
     $habitats = $pdo->query("SELECT * FROM habitats")->fetchAll();
+
+    // Récupérer les aliments consommés depuis MongoDB
+    $client = new MongoDB\Client("mongodb://localhost:27017");
+    $mongoDb = $client->Zoo_Arcadia;
+    $collection = $mongoDb->selectCollection('Animal_food'); // Change 'Animal_food' au nom de la collection appropriée
+    $aliments = $collection->find();
 } catch (Exception $e) {
     echo "Erreur lors de la récupération des données : " . $e->getMessage();
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -44,13 +57,12 @@ try {
     <main class="container mt-4">
         <h1 class="text-center">Tableau de bord de <?php echo $_SESSION['username']; ?></h1>
 
-
-       
-
         <!-- Section pour les commentaires sur les habitats -->
         <div class="admin-section mt-5">
             <h2>Commentaires sur les Habitats</h2>
             <form action="submit_habitat_comment.php" method="POST">
+                <!-- Champ caché pour le token CSRF -->
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <div class="form-group">
                     <label for="habitat_id">Sélectionnez un habitat :</label>
                     <select class="form-control" id="habitat_id" name="habitat_id">
@@ -69,29 +81,26 @@ try {
 
         <!-- Section pour visualiser les aliments consommés -->
         <div class="admin-section mt-5">
-    <h2>Aliments consommés par les animaux</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Animal</th>
-                <th>Aliment</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            // Récupérer les informations des aliments depuis MongoDB
-            $aliments = $collection->find(); 
-            foreach ($aliments as $aliment): ?>
-                <tr>
-                    <td><?= isset($aliment['animal_name']) ? htmlspecialchars($aliment['animal_name']) : 'Non défini'; ?></td>
-                    <td><?= isset($aliment['food']) ? htmlspecialchars($aliment['food']) : 'Non défini'; ?></td>
-                    <td><?= isset($aliment['date']) ? htmlspecialchars($aliment['date']) : 'Non défini'; ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
+            <h2>Aliments consommés par les animaux</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Animal</th>
+                        <th>Aliment</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($aliments as $aliment): ?>
+                        <tr>
+                            <td><?= isset($aliment['animal_name']) ? htmlspecialchars($aliment['animal_name']) : 'Non défini'; ?></td>
+                            <td><?= isset($aliment['food']) ? htmlspecialchars($aliment['food']) : 'Non défini'; ?></td>
+                            <td><?= isset($aliment['date']) ? htmlspecialchars($aliment['date']) : 'Non défini'; ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </main>
 </body>
 </html>

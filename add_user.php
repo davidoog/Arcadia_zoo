@@ -22,8 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     $role = $_POST['role'];
 
+
+    // Validation des champs
+if (empty($username) || empty($password) || empty($role)) {
+    echo "Tous les champs sont requis.";
+    exit();
+}
     // Utiliser password_hash pour hacher le mot de passe de manière sécurisée
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Insérer l'utilisateur avec gestion des erreurs
     try {

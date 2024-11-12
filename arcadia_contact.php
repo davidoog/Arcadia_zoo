@@ -1,3 +1,57 @@
+<?php
+// Démarrage de la session si nécessaire
+session_start();
+require_once 'db.php'; // Connexion à la base de données
+
+// Inclusion du fichier de connexion à la base de données si vous enregistrez les messages
+require_once 'db.php'; // Assurez-vous que le fichier 'db.php' existe et fonctionne correctement
+
+// Vérifiez que la requête est bien POST
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Sécurisation et validation des données
+    $subject = trim($_POST['subject']);
+    $description = trim($_POST['description']);
+    $email = trim($_POST['email']);
+
+    // Vérification des champs
+    if (empty($subject) || empty($description) || empty($email)) {
+        echo "Tous les champs sont obligatoires.";
+        exit;
+    }
+
+    // Validation de l'email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "L'adresse email n'est pas valide.";
+        exit;
+    }
+
+    // Envoi de l'email au zoo
+    $to = "contactarcadia.supp@gmail.com"; 
+    $headers = "From: $email" . "\r\n" .
+               "Reply-To: $email" . "\r\n" .
+               "X-Mailer: PHP/" . phpversion();
+
+    $message = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
+
+    // Envoi de l'email
+    if (mail($to, $subject, $message, $headers)) {
+        echo "Votre demande a été envoyée avec succès.";
+    } else {
+        echo "Une erreur est survenue lors de l'envoi de votre demande.";
+    }
+
+    // Optionnel : Enregistrement du message dans la base de données
+    /*
+    $db = new Database();
+    $pdo = $db->getConnection();
+    $stmt = $pdo->prepare("INSERT INTO contact_requests (subject, description, email) VALUES (?, ?, ?)");
+    $stmt->execute([$subject, $description, $email]);
+    */
+} else {
+    echo "Requête non valide.";
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -23,7 +77,7 @@
                     <li><a href="arcadia_accueil.php">Accueil</a></li>
                     <li><a href="arcadia_habitats.php">Habitats</a></li>
                     <li><a href="arcadia_services.php">Services</a></li>
-                    <li><a href="arcadia_contact.html">Contact</a></li>
+                    <li><a href="arcadia_contact.php">Contact</a></li>
                     <li><a href="arcadia_connexion.php">Connexion</a></li>
                 </ul>
             </div>
@@ -33,7 +87,7 @@
                     <li><a href="arcadia_accueil.php">Retour vers la page d'accueil</a></li>
                     <li><a href="arcadia_habitats.php">Accès à tous les habitats</a></li>
                     <li><a href="arcadia_services.php">Accès à tous les services</a></li>
-                    <li><a href="arcadia_contact.html">Contact</a></li>
+                    <li><a href="arcadia_contact.php">Contact</a></li>
                     <li class="connexion"><a href="arcadia_connexion.php" class="btn btn-primary">Connexion</a></li>
                 </ul>
             </div>

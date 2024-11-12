@@ -15,6 +15,11 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
+// Génère un token CSRF si celui-ci n'existe pas encore
+if (!isset($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 try {
     // Connexion à MongoDB et sélection de la collection Animals_visits
     $client = new MongoDB\Client("mongodb://localhost:27017");
@@ -66,6 +71,21 @@ try {
     </header>
 
     <main class="container mt-4">
+        <?php if (isset($_GET['reset'])): ?>
+        <div class="alert 
+            <?php echo $_GET['reset'] == 'success' ? 'alert-success' : 'alert-danger'; ?>" 
+            role="alert">
+            <?php
+            if ($_GET['reset'] == 'success') {
+                echo "Les consultations des animaux ont été réinitialisées avec succès.";
+            } elseif ($_GET['reset'] == 'error_csrf') {
+                echo "Erreur CSRF : Requête non autorisée.";
+            } else {
+                echo "Erreur lors de la réinitialisation des consultations. Veuillez réessayer.";
+            }
+            ?>
+        </div>
+    <?php endif; ?>
         <h1 class="text-center">Tableau de bord de José, <?php echo $_SESSION['username']; ?> !</h1>
 
         <!-- Bloc principal avec les actions admin -->
@@ -90,7 +110,12 @@ try {
             <?php foreach ($visits as $visit): ?>
                 <p class="consultation-info"><?php echo $visit['animal_name'] . ' a été consulté ' . $visit['count'] . ' fois.'; ?></p>
             <?php endforeach; ?>
-            <button id="resetButton" class="btn btn-danger">Réinitialiser les consultations</button>
+    
+            <!-- Formulaire pour réinitialiser les consultations avec protection CSRF -->
+            <form method="POST" action="reset_visits.php">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                <button type="submit" class="btn btn-danger">Réinitialiser les consultations</button>
+            </form>
         </div>
 
         <!-- Bloc pour les horaires du zoo -->
@@ -98,7 +123,8 @@ try {
             <h2>Horaires du Zoo</h2>
             <p><strong>Heures d'ouverture :</strong> <?php echo $hours['opening_time']; ?></p>
             <p><strong>Heures de fermeture :</strong> <?php echo $hours['closing_time']; ?></p>
-            <form id="updateHoursForm">
+            <form id="updateHoursForm" method="POST" action="update_hours.php">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <div class="form-group">
                     <label for="opening_hour">Nouvelle heure d'ouverture</label>
                     <input type="time" id="opening_hour" name="opening_hour" class="form-control">
