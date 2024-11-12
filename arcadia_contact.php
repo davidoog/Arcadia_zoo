@@ -28,6 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Validation de l'email
         $message = "L'adresse email n'est pas valide.";
     } else {
+        // Vérification des variables d'environnement
+        var_dump($_ENV['EMAIL_HOST']);
+        var_dump($_ENV['EMAIL_USERNAME']);
+        var_dump($_ENV['EMAIL_PASSWORD']);
+        var_dump($_ENV['EMAIL_PORT']);
+        exit(); // Arrête le script ici pour afficher les valeurs
+
         // Envoi de l'email au zoo avec PHPMailer
         $mail = new PHPMailer(true);
         try {
@@ -53,10 +60,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } catch (Exception $e) {
             $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
         }
-            }
-        
+    }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
