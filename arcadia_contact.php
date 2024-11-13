@@ -73,13 +73,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Zoo Arcadia</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="contact.css">
 </head>
 <body>
+    <header>
+        <div class="topbar">
+            <div class="menu-icon" id="menu-icon">
+                <div class="menu-hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="side-menu" id="side-menu">
+                <ul>
+                    <li><a href="arcadia_accueil.php">Accueil</a></li>
+                    <li><a href="arcadia_habitats.php">Habitats</a></li>
+                    <li><a href="arcadia_services.php">Services</a></li>
+                    <li><a href="arcadia_contact.php">Contact</a></li>
+                    <li><a href="arcadia_connexion.php">Connexion</a></li>
+                </ul>
+            </div>
+
+            <div class="menu">
+                <ul>
+                    <li><a href="arcadia_accueil.php">Retour vers la page d'accueil</a></li>
+                    <li><a href="arcadia_habitats.php">Accès à tous les habitats</a></li>
+                    <li><a href="arcadia_services.php">Accès à tous les services</a></li>
+                    <li><a href="arcadia_contact.php">Contact</a></li>
+                    <li class="connexion"><a href="arcadia_connexion.php" class="btn btn-primary">Connexion</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    
     <div class="container mt-5">
         <h1 class="text-center">Contactez-nous</h1>
         <p class="text-center">Remplissez le formulaire ci-dessous pour nous contacter</p>
         
-        <form method="POST">
+        <form id="contact-form" action="submit_form.php" method="POST" class="mt-4">
             <div class="mb-3">
                 <label for="subject" class="form-label">Titre</label>
                 <input type="text" class="form-control" id="subject" name="subject" placeholder="Objet" required>
@@ -105,5 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="alert alert-info mt-3"><?php echo $message; ?></div>
         <?php endif; ?>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="contact.js"></script>
 </body>
 </html>
