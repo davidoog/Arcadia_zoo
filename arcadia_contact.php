@@ -26,12 +26,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = "L'adresse email n'est pas valide.";
     } else {
         // Récupérer les variables d'environnement depuis Heroku
-        $mailer_dsn = getenv('MAILER_DSN');  // Ex: smtp://username:password@smtp.mailtrap.io:587
+        $mailer_dsn = getenv('MAILER_DSN');  // Ex: smtp://fc74c6fbd218:0e8e111fd2b52a@smtp.mailtrap.io:587
         $mailtrap_username = getenv('EMAIL_USERNAME'); // Email utilisateur Mailtrap
         $mailtrap_password = getenv('EMAIL_PASSWORD'); // Mot de passe Mailtrap
         
-        // Configuration de l'email via Symfony Mailer
-        $transport = new EsmtpTransport($mailer_dsn, 587);
+        // Configuration du transport avec Symfony Mailer
+        $transport = new EsmtpTransport($mailer_dsn);  // Utilise le DSN complet ici
         $transport->setUsername($mailtrap_username);  // Utilise l'username de Mailtrap
         $transport->setPassword($mailtrap_password); // Utilise le mot de passe de Mailtrap
 
