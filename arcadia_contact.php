@@ -1,7 +1,6 @@
 <?php
 // Démarrage de la session si nécessaire
 session_start();
-ini_set('sendmail_path', '/usr/sbin/sendmail -t -i');
 require_once 'db.php'; // Connexion à la base de données
 require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 
@@ -32,13 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->SMTPDebug = 0; // Niveau de débogage
             $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
 
-            // Configuration SMTP sans utiliser 'sendmail'
+            // Configuration SMTP avec Mailtrap
+            $mail->Host = 'sandbox.smtp.mailtrap.io';  // Hôte Mailtrap
             $mail->SMTPAuth = true;
-            $mail->Host = $_ENV['MAIL_HOST'];  // Utilisation de la variable d'environnement pour l'hôte
-            $mail->Username = $_ENV['EMAIL_USERNAME']; // Votre nom d'utilisateur (email) pour le serveur SMTP
-            $mail->Password = $_ENV['EMAIL_PASSWORD']; // Le mot de passe d'application généré précédemment
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Utilisation de STARTTLS pour sécuriser la connexion
-            $mail->Port = $_ENV['MAIL_PORT']; // Le port SMTP (généralement 587 pour STARTTLS)
+            $mail->Username = 'fc74c6fbd218';           // Nom d'utilisateur Mailtrap
+            $mail->Password = '0e8e111fd2b52a';        // Mot de passe Mailtrap
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Sécurisation de la connexion
+            $mail->Port = 587;                          // Port SMTP
 
             // Configuration de l'email
             $mail->setFrom($email, 'Visiteur Zoo Arcadia');
