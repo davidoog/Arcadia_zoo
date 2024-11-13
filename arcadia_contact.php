@@ -1,6 +1,7 @@
 <?php
 // Démarrage de la session si nécessaire
 session_start();
+ini_set('sendmail_path', '/usr/sbin/sendmail -t -i');
 require_once 'db.php'; // Connexion à la base de données
 require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
 
@@ -32,10 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
 
             // Configuration SMTP sans utiliser 'sendmail'
-            $mail->Host = $_ENV['MAIL_HOST'];  // Utilisation de la variable d'environnement pour l'hôte
             $mail->SMTPAuth = true;
+            $mail->Host = $_ENV['MAIL_HOST'];  // Utilisation de la variable d'environnement pour l'hôte
             $mail->Username = $_ENV['EMAIL_USERNAME']; // Votre nom d'utilisateur (email) pour le serveur SMTP
-            $mail->Password = 'gpnqykxkmujiiqgb'; // Le mot de passe d'application généré précédemment
+            $mail->Password = $_ENV['EMAIL_PASSWORD']; // Le mot de passe d'application généré précédemment
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Utilisation de STARTTLS pour sécuriser la connexion
             $mail->Port = $_ENV['MAIL_PORT']; // Le port SMTP (généralement 587 pour STARTTLS)
 
