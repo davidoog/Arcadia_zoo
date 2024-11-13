@@ -26,3 +26,19 @@ document.addEventListener('click', function(event) {
         }
     }
 });
+
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    const subject = document.getElementById('subject').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const email = document.getElementById('email').value.trim();
+
+    if (subject === '' || description === '' || email === '') {
+        alert('Veuillez remplir tous les champs.');
+        event.preventDefault(); // Empêche l'envoi du formulaire si validation échoue
+    } else if (!validateEmail(email)) {
+        alert('Veuillez entrer une adresse email valide.');
+        event.preventDefault(); // Empêche l'envoi du formulaire si email invalide
+    } else {
+        console.log("Formulaire prêt à être envoyé"); // Vérifier l'état
+    }
+});

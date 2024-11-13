@@ -2,10 +2,12 @@
 // Démarrage de la session si nécessaire
 session_start();
 require_once 'db.php'; // Connexion à la base de données
-require 'vendor/autoload.php'; // Autoloader de Composer pour PHPMailer
+require 'vendor/autoload.php'; // Autoloader de Composer pour Symfony Mailer
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 // Message initial pour l'affichage
 $message = ''; 
@@ -23,34 +25,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Validation de l'email
         $message = "L'adresse email n'est pas valide.";
     } else {
-        // Envoi de l'email au zoo avec PHPMailer
-        $mail = new PHPMailer(true);
+        // Récupérer les variables d'environnement depuis Heroku
+        $mailer_dsn = getenv('MAILER_DSN');  // Ex: smtp://username:password@smtp.mailtrap.io:587
+        $mailtrap_username = getenv('EMAIL_USERNAME'); // Email utilisateur Mailtrap
+        $mailtrap_password = getenv('EMAIL_PASSWORD'); // Mot de passe Mailtrap
+        
+        // Configuration de l'email via Symfony Mailer
+        $transport = new EsmtpTransport($mailer_dsn, 587);
+        $transport->setUsername($mailtrap_username);  // Utilise l'username de Mailtrap
+        $transport->setPassword($mailtrap_password); // Utilise le mot de passe de Mailtrap
+
+        $mailer = new Mailer($transport);
+
+        // Créer l'email
+        $emailMessage = (new Email())
+            ->from($email)
+            ->to('contactarcadia.supp@gmail.com')  // L'email de destination
+            ->subject($subject)
+            ->text("Titre : $subject\n\nDescription : $description\n\nEmail : $email");
+
+        // Envoi de l'email
         try {
-            // Configuration du serveur SMTP
-            $mail->isSMTP();
-            $mail->SMTPDebug = 0; // Niveau de débogage
-            $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
-
-            // Configuration SMTP avec Mailtrap
-            $mail->Host = 'sandbox.smtp.mailtrap.io';  // Hôte Mailtrap
-            $mail->SMTPAuth = true;
-            $mail->Username = 'fc74c6fbd218';           // Nom d'utilisateur Mailtrap
-            $mail->Password = '0e8e111fd2b52a';        // Mot de passe Mailtrap
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Sécurisation de la connexion
-            $mail->Port = 587;                          // Port SMTP
-
-            // Configuration de l'email
-            $mail->setFrom($email, 'Visiteur Zoo Arcadia');
-            $mail->addAddress('contactarcadia.supp@gmail.com'); // Email de destination
-            $mail->Subject = $subject;
-            $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
-
-            // Envoi de l'email
-            $mail->send();
+            $mailer->send($emailMessage);
             $message = "Votre demande a été envoyée avec succès.";
-        } catch (Exception $e) {
+        } catch (TransportExceptionInterface $e) {
             // Si une erreur survient, afficher l'erreur spécifique
-            $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
+            $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$e->getMessage()}";
         }
     }
 }
