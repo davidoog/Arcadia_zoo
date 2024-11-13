@@ -4,6 +4,10 @@ session_start();
 require_once 'db.php'; // Connexion à la base de données
 require 'vendor/autoload.php'; // Autoloader de Composer pour Symfony Mailer
 
+// Connexion à la base de données via la classe Database
+$db = new Database();  
+$pdo = $db->getConnection();  // Récupérer l'objet PDO 
+
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
