@@ -32,6 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Debugoutput = 'html'; // Affichage des erreurs en HTML
 
             // Configuration SMTP sans utiliser 'sendmail'
+            $mail->isSMTP();
             $mail->Host = $_ENV['MAIL_HOST'];  // Assurez-vous que cette variable est correcte dans Heroku
             $mail->SMTPAuth = true;
             $mail->Username = $_ENV['EMAIL_USERNAME']; // Votre nom d'utilisateur (email) pour le serveur SMTP
