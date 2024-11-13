@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Host = $_ENV['MAIL_HOST'];  // Assurez-vous que cette variable est correcte dans Heroku
             $mail->SMTPAuth = true;
             $mail->Username = $_ENV['EMAIL_USERNAME']; // Votre nom d'utilisateur (email) pour le serveur SMTP
-            $mail->Password = $_ENV['EMAIL_PASSWORD']; // Votre mot de passe ou mot de passe d'application pour le serveur SMTP
+            $mail->Password = 'gpnqykxkmujiiqgb'; // Le mot de passe d'application généré précédemment
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Utilisation de STARTTLS pour sécuriser la connexion
             $mail->Port = $_ENV['MAIL_PORT']; // Le port SMTP (généralement 587 pour STARTTLS)
 
