@@ -65,3 +65,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Zoo Arcadia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Contactez-nous</h1>
+        <p class="text-center">Remplissez le formulaire ci-dessous pour nous contacter</p>
+        
+        <form method="POST">
+            <div class="mb-3">
+                <label for="subject" class="form-label">Titre</label>
+                <input type="text" class="form-control" id="subject" name="subject" placeholder="Objet" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="5" placeholder="Décrivez votre demande" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Votre adresse email" required>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-custom">Envoyer</button>
+            </div>
+        </form>
+
+        <!-- Message à l'utilisateur -->
+        <?php if (!empty($message)): ?>
+            <div class="alert alert-info mt-3"><?php echo $message; ?></div>
+        <?php endif; ?>
+    </div>
+</body>
+</html>
