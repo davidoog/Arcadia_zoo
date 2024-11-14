@@ -25,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail = new PHPMailer(true);
 
         try {
-            // Configuration du serveur SMTP de CloudMailIn
+            // Configuration du serveur SMTP de mailtrap
             $mail->isSMTP();
-            $mail->Host = 'smtp.cloudmta.net'; // Hôte SMTP fourni par CloudMailIn
+            $mail->Host = 'sandbox.smtp.mailtrap.io'; // Hôte SMTP fourni par CloudMailIn
             $mail->SMTPAuth = true;
-            $mail->Username = getenv('CLOUDMAILIN_USERNAME'); // Votre nom d'utilisateur CloudMailIn à partir des variables d'environnement
-            $mail->Password = getenv('CLOUDMAILIN_PASSWORD'); // Votre mot de passe CloudMailIn à partir des variables d'environnement
+            $mail->Username = getenv('MAILTRAP_USERNAME'); 
+            $mail->Password = getenv('MAILTRAP_PASSWORD'); 
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Activez STARTTLS si disponible
             $mail->Port = 587; // Port utilisé pour l'envoi via SMTP
 
