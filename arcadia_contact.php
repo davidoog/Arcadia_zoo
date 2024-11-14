@@ -8,6 +8,7 @@ require 'vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+// Vérifier si le formulaire est soumis
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sécurisation et validation des données
     $subject = trim($_POST['subject']);
@@ -25,14 +26,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail = new PHPMailer(true);
 
         try {
-            // Configuration du serveur SMTP de Sendgrid via Twilio
+            // Configuration du serveur SMTP de Gmail
             $mail->isSMTP();
-            $mail->Host = 'smtp.sendgrid.net'; // Hôte SMTP fourni par Twilio
+            $mail->Host = 'smtp.gmail.com';  // Hôte SMTP de Gmail
             $mail->SMTPAuth = true;
-            $mail->Username = 'apikey'; 
-            $mail->Password = getenv('SENDGRID_API_KEY'); 
+            $mail->Username = getenv('GMAIL_USERNAME'); // Récupère le nom d'utilisateur depuis les variables d'environnement de Heroku
+            $mail->Password = getenv('GMAIL_PASSWORD'); // Récupère le mot de passe depuis les variables d'environnement de Heroku
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Activez STARTTLS si disponible
-            $mail->Port = 587; // Port utilisé pour l'envoi via SMTP
+            $mail->Port = 587; // Port pour Gmail
 
             // Configuration du message
             $mail->setFrom($email, 'Visiteur du site Arcadia Zoo');
