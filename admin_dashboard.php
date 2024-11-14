@@ -142,7 +142,6 @@ try {
 
 
     </main>
-    <script src="admin20.js"></script>
     <script src="manage_services.js"></script>
     
 </body>
