@@ -25,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail = new PHPMailer(true);
 
         try {
-            // Configuration du serveur SMTP de mailtrap
+            // Configuration du serveur SMTP de Sendgrid via Twilio
             $mail->isSMTP();
-            $mail->Host = 'sandbox.smtp.mailtrap.io'; // Hôte SMTP fourni par CloudMailIn
+            $mail->Host = 'smtp.sendgrid.net'; // Hôte SMTP fourni par Twilio
             $mail->SMTPAuth = true;
-            $mail->Username = getenv('MAILTRAP_USERNAME'); 
-            $mail->Password = getenv('MAILTRAP_PASSWORD'); 
+            $mail->Username = 'apikey'; 
+            $mail->Password = getenv('SENDGRID_API_KEY'); 
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Activez STARTTLS si disponible
             $mail->Port = 587; // Port utilisé pour l'envoi via SMTP
 
