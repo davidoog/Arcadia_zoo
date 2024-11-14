@@ -97,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h1 class="text-center">Contactez-nous</h1>
         <p class="text-center">Remplissez le formulaire ci-dessous pour nous contacter</p>
         
-        <form id="contact-form" action="submit_form.php" method="POST" class="mt-4">
+        <form id="contact-form" action="arcadia_contact.php" method="POST" class="mt-4">
             <div class="mb-3">
                 <label for="subject" class="form-label">Titre</label>
                 <input type="text" class="form-control" id="subject" name="subject" placeholder="Objet" required>
