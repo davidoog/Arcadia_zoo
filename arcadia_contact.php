@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             // Configuration du serveur SMTP de CloudMailIn
             $mail->isSMTP();
-            $mail->Host = 'smtp.cloudta.net'; // Hôte SMTP fourni par CloudMailIn
+            $mail->Host = 'smtp.cloudmta.net'; // Hôte SMTP fourni par CloudMailIn
             $mail->SMTPAuth = true;
             $mail->Username = getenv('CLOUDMAILIN_USERNAME'); // Votre nom d'utilisateur CloudMailIn à partir des variables d'environnement
             $mail->Password = getenv('CLOUDMAILIN_PASSWORD'); // Votre mot de passe CloudMailIn à partir des variables d'environnement
