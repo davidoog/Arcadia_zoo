@@ -4,8 +4,9 @@ session_start();
 // Charger l'autoloader de Composer
 require 'vendor/autoload.php';
 
-// Charger Guzzle
-use GuzzleHttp\Client;
+// Charger PHPMailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sécurisation et validation des données
@@ -20,35 +21,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Validation de l'email
         $message = "L'adresse email n'est pas valide.";
     } else {
-        // Informations de Mailtrap API
-        $apiUrl = 'https://send.api.mailtrap.io/api/v1.0/send';
-        $apiKey = getenv('MAILTRAP_API_KEY');  // Ton API Token de Mailtrap
-
-        // Créer un client Guzzle
-        $client = new Client();
-
-        // Construction des données du message
-        $data = [
-            'from' => $email,
-            'to' => 'contactarcadia.supp@gmail.com',
-            'subject' => $subject,
-            'text' => "Titre : $subject\n\nDescription : $description\n\nEmail : $email",
-        ];
+        // Créer une instance de PHPMailer
+        $mail = new PHPMailer(true);
 
         try {
-            // Envoi de la requête POST à Mailtrap API
-            $response = $client->post($apiUrl, [
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $apiKey, // API Key d'authentification
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => $data,
-            ]);
+            // Configuration du serveur SMTP de CloudMailIn
+            $mail->isSMTP();
+            $mail->Host = 'smtp.cloudta.net'; // Hôte SMTP fourni par CloudMailIn
+            $mail->SMTPAuth = true;
+            $mail->Username = getenv('CLOUDMAILIN_USERNAME'); // Votre nom d'utilisateur CloudMailIn à partir des variables d'environnement
+            $mail->Password = getenv('CLOUDMAILIN_PASSWORD'); // Votre mot de passe CloudMailIn à partir des variables d'environnement
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Activez STARTTLS si disponible
+            $mail->Port = 587; // Port utilisé pour l'envoi via SMTP
 
+            // Configuration du message
+            $mail->setFrom($email, 'Visiteur du site Arcadia Zoo');
+            $mail->addAddress('contactarcadia.supp@gmail.com'); // Destinataire du message
+            $mail->Subject = $subject;
+            $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
+
+            // Envoyer le message
+            $mail->send();
             $message = "Votre demande a été envoyée avec succès.";
-        } catch (\Exception $e) {
-            // Si une erreur survient, afficher l'erreur spécifique
-            $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$e->getMessage()}";
+        } catch (Exception $e) {
+            // Gestion des erreurs
+            $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
         }
     }
 }
