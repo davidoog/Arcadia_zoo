@@ -8,15 +8,15 @@ require 'vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+// Vérifier si le formulaire est soumis
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sécurisation et validation des données
     $subject = trim($_POST['subject']);
     $description = trim($_POST['description']);
     $email = trim($_POST['email']);
-    $name = trim($_POST['name']);  // Ajoutez un champ "name" dans le formulaire HTML pour obtenir le nom du visiteur.
 
     // Vérification des champs
-    if (empty($subject) || empty($description) || empty($email) || empty($name)) {
+    if (empty($subject) || empty($description) || empty($email)) {
         $message = "Tous les champs sont obligatoires.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         // Validation de l'email
@@ -36,9 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Port = 587; // Port pour Gmail
 
             // Configuration du message
-            $mail->setFrom(getenv('GMAIL_USERNAME'), $name); // Utilise le nom du visiteur dans le champ "From"
+            $mail->setFrom($email, 'Visiteur du site Arcadia Zoo');
             $mail->addAddress('contactarcadia.supp@gmail.com'); // Destinataire du message
-            $mail->addReplyTo($email, $name); // Réponse envoyée à l'email du visiteur
+            $mail->addReplyTo($email, 'Visiteur');  // L'email de l'utilisateur qui envoie le message
             $mail->Subject = $subject;
             $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
 
