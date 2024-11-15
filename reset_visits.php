@@ -15,9 +15,11 @@ if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_tok
 }
 
 try {
-    $client = new MongoDB\Client("mongodb://localhost:27017");
-    $db = $client->Zoo_Arcadia;
-    $animalsCollection = $db->Animals_visits;
+    // Utiliser l'URI MongoDB de Heroku
+    $mongoUri = getenv('MONGODB_URI'); // Récupérer l'URI MongoDB depuis les variables d'environnement
+    $client = new MongoDB\Client($mongoUri);  // Connexion à MongoDB avec l'URI de Heroku
+    $db = $client->Zoo_Arcadia;  // Sélectionner la base de données Zoo_Arcadia
+    $animalsCollection = $db->Animals_visits;  // Sélectionner la collection Animals_visits
 
     // Réinitialiser le compteur pour tous les animaux
     $animalsCollection->updateMany([], ['$set' => ['count' => 0]]);
