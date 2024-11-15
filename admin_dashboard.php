@@ -1,12 +1,13 @@
 <?php
 session_start();
+
 // Connexion à MongoDB
-require 'mongo_connection.php'; // Connexion à MongoDB
-require_once 'db.php'; // Connexion à la base MySQL
+require 'vendor/autoload.php'; // Si vous utilisez Composer pour installer le driver MongoDB
+require_once 'db.php'; // Connexion à la base MySQL (si nécessaire)
 
 // Connexion à la base de données via la classe Database
-$db = new Database();  
-$pdo = $db->getConnection();  // Récupérer l'objet PDO
+$db = new Database();
+$pdo = $db->getConnection();  // Récupérer l'objet PDO (si vous utilisez MySQL)
 
 // Vérifier si l'utilisateur est connecté et a le rôle 'admin'
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
@@ -21,18 +22,35 @@ if (!isset($_SESSION['csrf_token'])) {
 }
 
 try {
-    // Connexion à MongoDB et sélection de la collection Animals_visits
-    $client = new MongoDB\Client("mongodb://localhost:27017");
+    // Connexion à MongoDB Atlas
+    // Remplacez la variable d'environnement MONGODB_URI par votre URI MongoDB Atlas
+    $mongoUri = getenv('MONGODB_URI'); 
+    $client = new MongoDB\Client($mongoUri); // Connexion à MongoDB
     $mongoDb = $client->Zoo_Arcadia; // Sélectionner la base de données Zoo_Arcadia
-    $collection = $mongoDb->selectCollection('Animals_visits'); // Sélectionner la collection Animals_visits
+    $collection = $mongoDb->Animals_visits; // Sélectionner la collection Animals_visits
 
-    // Récupérer toutes les visites
-    $visits = $collection->find();
+    // Récupérer toutes les visites (si nécessaire)
+    $visits = $collection->find(); // Exécuter la requête MongoDB pour récupérer les visites
 
-    // Récupérer les horaires depuis MySQL
-    $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch(); 
+    // Récupérer les horaires depuis MySQL (si nécessaire)
+    $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
+
+    // Exemple de traitement des données MongoDB et MySQL
+    foreach ($visits as $visit) {
+        echo "Nom de l'animal : " . $visit['animal_name'] . "<br>";
+        echo "Nombre de visites : " . $visit['count'] . "<br><br>";
+    }
+
+    // Afficher les horaires du zoo (si nécessaire)
+    if ($hours) {
+        echo "Heure d'ouverture : " . $hours['opening_time'] . "<br>";
+        echo "Heure de fermeture : " . $hours['closing_time'] . "<br>";
+    }
+
 } catch (Exception $e) {
+    // Afficher l'erreur si la connexion échoue
     echo "Erreur lors de la récupération des données : " . $e->getMessage();
+    die();
 }
 ?>
 
