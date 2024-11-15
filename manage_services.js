@@ -38,27 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 serviceDescriptionInput.value = service.description;
             });
     };
-
-    serviceForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        const formData = new FormData(serviceForm);
-        fetch("save_service.php", {
-            method: "POST",
-            body: formData,
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    loadServices();
-                    serviceForm.reset();
-                    serviceIdInput.value = "";
-                } else {
-                    alert("Erreur lors de la sauvegarde.");
-                }
-            });
-    });
-
+ 
     window.deleteService = function (id) {
         if (confirm("Voulez-vous vraiment supprimer ce service ?")) {
             fetch(`delete_service.php?id=${id}`, {
