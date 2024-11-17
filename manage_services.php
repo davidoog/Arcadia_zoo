@@ -62,4 +62,5 @@ try {
         </table>
     </div>
 </body>
+<script src="manage_services.js"></script>
 </html>
