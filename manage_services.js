@@ -4,48 +4,24 @@ window.addEventListener("load", function () {
             .then(response => response.json())
             .then(data => {
                 const servicesTable = document.getElementById("servicesTable");
-                servicesTable.innerHTML = "";
+                servicesTable.innerHTML = "";  // Réinitialiser le contenu de la table
+
+                // Ajouter chaque service à la table
                 data.services.forEach(service => {
                     const serviceRow = `
                         <tr>
                             <td>${service.title}</td>
                             <td>${service.description}</td>
-                            <td><img src="${service.image}" alt="${service.title}" width="100"></td>
                             <td>
-                                <button class="btn btn-primary" onclick="editService(${service.id})">Modifier</button>
-                                <button class="btn btn-danger" onclick="deleteService(${service.id})">Supprimer</button>
+                                <a href="edit_service.php?id=${service.id}" class="btn btn-warning">Modifier</a>
+                                <a href="delete_service.php?id=${service.id}" class="btn btn-danger">Supprimer</a>
                             </td>
                         </tr>
                     `;
-                    servicesTable.innerHTML += serviceRow;
+                    servicesTable.innerHTML += serviceRow;  // Ajouter la ligne à la table
                 });
             });
     }
 
-    window.editService = function (id) {
-        fetch(`get_service.php?id=${id}`)
-            .then(response => response.json())
-            .then(service => {
-                // Vous pouvez ici traiter les données du service pour les afficher ou les modifier
-                console.log(service);
-            });
-    };
-
-    window.deleteService = function (id) {
-        if (confirm("Voulez-vous vraiment supprimer ce service ?")) {
-            fetch(`delete_service.php?id=${id}`, {
-                method: "DELETE",
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.status === "success") {
-                        loadServices();
-                    } else {
-                        alert("Erreur lors de la suppression.");
-                    }
-                });
-        }
-    };
-
-    loadServices();
+    loadServices();  // Charger les services au chargement de la page
 });

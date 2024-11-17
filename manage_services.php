@@ -8,9 +8,6 @@ require 'init.php';
 $db = new Database();  // Créer une instance de la classe Database
 $pdo = $db->getConnection(); // Récupérer l'objet PDO
 
-
-
-
 // Vérification du rôle admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header('Location: arcadia_connexion.html');
@@ -48,19 +45,19 @@ try {
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-            <?php foreach ($services as $service): ?>
-    <tr>
-        <td><?= htmlspecialchars($service['title']); ?></td>
-        <td>
-            <?= isset($service['description1']) ? htmlspecialchars($service['description1']) : 'Pas de description'; ?>
-        </td>
-        <td>
-            <a href="edit_service.php?id=<?= $service['id']; ?>" class="btn btn-warning">Modifier</a>
-            <a href="delete_service.php?id=<?= $service['id']; ?>" class="btn btn-danger">Supprimer</a>
-        </td>
-    </tr>
-<?php endforeach; ?>
+            <tbody id="servicesTable">
+                <?php foreach ($services as $service): ?>
+                <tr>
+                    <td><?= htmlspecialchars($service['title']); ?></td>
+                    <td>
+                        <?= isset($service['description1']) ? htmlspecialchars($service['description1']) : 'Pas de description'; ?>
+                    </td>
+                    <td>
+                        <a href="edit_service.php?id=<?= $service['id']; ?>" class="btn btn-warning">Modifier</a>
+                        <a href="delete_service.php?id=<?= $service['id']; ?>" class="btn btn-danger">Supprimer</a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
