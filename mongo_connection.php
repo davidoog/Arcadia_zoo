@@ -1,11 +1,16 @@
 <?php
 require 'vendor/autoload.php'; // Inclure Composer autoload
+use Dotenv\Dotenv;
 
-// Connexion à MongoDB
+// Charger les variables d'environnement depuis le fichier .env
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Connexion à MongoDB avec la variable d'environnement
 try {
-    $client = new MongoDB\Client("mongodb://admin:147123C1secret!@localhost:27017/?authSource=admin");
-    $db = $client->Zoo_Arcadia; // Remplace par le nom de ta base
-    $collection = $db->Animals_visits; // Nom de ta collection
+    $client = new MongoDB\Client(getenv('MONGODB_URI')); // Utiliser MONGODB_URI depuis les variables d'environnement
+    $db = $client->Zoo_Arcadia; // Base de données
+    $collection = $db->Animals_visits; // Collection
 } catch (Exception $e) {
     echo "Erreur de connexion : " . $e->getMessage();
     die();
