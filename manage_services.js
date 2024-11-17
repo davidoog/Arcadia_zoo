@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <td>${service.title}</td>
                             <td>${service.description}</td>
                             <td>
-                                <button class="btn btn-primary" onclick="editService(${service.id})">Modifier</button>
+                                <button class="btn btn-warning" onclick="editService(${service.id})">Modifier</button>
                                 <button class="btn btn-danger" onclick="deleteService(${service.id})">Supprimer</button>
                             </td>
                         </tr>
@@ -26,3 +26,36 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error("L'élément avec l'ID 'servicesTable' est introuvable.");
     }
 });
+
+// Fonction pour modifier un service
+function editService(serviceId) {
+    // Redirige vers la page d'édition du service
+    window.location.href = "edit_service.php?id=" + serviceId;
+}
+
+// Fonction pour supprimer un service
+function deleteService(serviceId) {
+    // Vérifier que l'utilisateur confirme la suppression
+    if (confirm('Êtes-vous sûr de vouloir supprimer ce service ?')) {
+        // Créez une requête AJAX pour envoyer la suppression du service
+        fetch('delete_service.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: serviceId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Le service a été supprimé.');
+                location.reload(); // Recharge la page après la suppression
+            } else {
+                alert('Erreur lors de la suppression du service.');
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+        });
+    }
+}
