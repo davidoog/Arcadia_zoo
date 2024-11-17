@@ -160,7 +160,7 @@ try {
 
 
     </main>
-    <script src="manage_services.js"></script>
+                
     
 </body>
 </html>
