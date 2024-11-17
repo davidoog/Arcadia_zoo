@@ -23,7 +23,6 @@ if (!isset($_SESSION['csrf_token'])) {
 
 try {
     // Connexion à MongoDB Atlas
-    // Remplacez la variable d'environnement MONGODB_URI par votre URI MongoDB Atlas
     $mongoUri = getenv('MONGODB_URI'); 
     $client = new MongoDB\Client($mongoUri); // Connexion à MongoDB
     $mongoDb = $client->Zoo_Arcadia; // Sélectionner la base de données Zoo_Arcadia
@@ -34,18 +33,6 @@ try {
 
     // Récupérer les horaires depuis MySQL (si nécessaire)
     $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
-
-    // Exemple de traitement des données MongoDB et MySQL
-    foreach ($visits as $visit) {
-        echo "Nom de l'animal : " . $visit['animal_name'] . "<br>";
-        echo "Nombre de visites : " . $visit['count'] . "<br><br>";
-    }
-
-    // Afficher les horaires du zoo (si nécessaire)
-    if ($hours) {
-        echo "Heure d'ouverture : " . $hours['opening_time'] . "<br>";
-        echo "Heure de fermeture : " . $hours['closing_time'] . "<br>";
-    }
 
 } catch (Exception $e) {
     // Afficher l'erreur si la connexion échoue
@@ -62,17 +49,30 @@ try {
     <title>Tableau de bord Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="admin_dashboard.css"> 
-
     <style>
         .admin-section {
             border: 1px solid #ccc;
             padding: 20px;
             margin-top: 20px;
             border-radius: 8px;
+            background-color: #f9f9f9;
         }
         .admin-section h2 {
             font-size: 1.5em;
             margin-bottom: 20px;
+        }
+        .consultation-info {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .consultation-info strong {
+            color: #007bff;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+        .reset-btn {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -103,21 +103,22 @@ try {
             }
             ?>
         </div>
-    <?php endif; ?>
+        <?php endif; ?>
+
         <h1 class="text-center">Tableau de bord de José, <?php echo $_SESSION['username']; ?> !</h1>
 
         <!-- Bloc principal avec les actions admin -->
         <div class="row mt-5">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a href="manage_users.php" class="btn btn-primary btn-block">Gérer les utilisateurs</a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a href="manage_animals.php" class="btn btn-primary btn-block">Gérer les animaux</a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a href="manage_habitats.php" class="btn btn-primary btn-block">Gérer les habitats</a>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <a href="manage_services.php" class="btn btn-primary btn-block">Gérer les services</a> 
             </div>
         </div>
@@ -126,13 +127,15 @@ try {
         <div class="admin-section mt-5">
             <h2>Consultations des Animaux</h2>
             <?php foreach ($visits as $visit): ?>
-                <p class="consultation-info"><?php echo $visit['animal_name'] . ' a été consulté ' . $visit['count'] . ' fois.'; ?></p>
+                <p class="consultation-info">
+                    <strong><?php echo $visit['animal_name']; ?></strong> a été consulté <strong><?php echo $visit['count']; ?></strong> fois.
+                </p>
             <?php endforeach; ?>
-    
+
             <!-- Formulaire pour réinitialiser les consultations avec protection CSRF -->
             <form method="POST" action="reset_visits.php">
                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                <button type="submit" class="btn btn-danger">Réinitialiser les consultations</button>
+                <button type="submit" class="btn btn-danger reset-btn">Réinitialiser les consultations</button>
             </form>
         </div>
 
@@ -154,13 +157,6 @@ try {
                 <button type="submit" class="btn btn-success mt-3">Mettre à jour les horaires</button>
             </form>
         </div>
-
-        
-
-
-
     </main>
-                
-    
 </body>
 </html>
