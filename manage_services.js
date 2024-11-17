@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("load", function () {
     const serviceForm = document.getElementById("manageServiceForm");
 
     // Vérifie si le formulaire existe avant d'ajouter l'événement
