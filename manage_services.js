@@ -35,6 +35,8 @@ function editService(serviceId) {
 
 // Fonction pour supprimer un service
 function deleteService(serviceId) {
+    console.log("Tentative de suppression du service avec ID:", serviceId);
+
     // Vérifier que l'utilisateur confirme la suppression
     if (confirm('Êtes-vous sûr de vouloir supprimer ce service ?')) {
         // Créez une requête AJAX pour envoyer la suppression du service
@@ -43,15 +45,16 @@ function deleteService(serviceId) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ id: serviceId })
+            body: JSON.stringify({ id: serviceId }) // Envoi de l'ID en JSON
         })
         .then(response => response.json())
         .then(data => {
+            console.log(data); // Ajoutez ce log pour voir la réponse du serveur
             if (data.status === 'success') {
                 alert('Le service a été supprimé.');
                 location.reload(); // Recharge la page après la suppression
             } else {
-                alert('Erreur lors de la suppression du service.');
+                alert('Erreur lors de la suppression du service : ' + data.message);
             }
         })
         .catch(error => {

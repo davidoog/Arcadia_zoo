@@ -1,12 +1,36 @@
 <?php
+session_start();
 require_once 'db.php';
 
-// Connexion à la base de données via la classe Database
-$db = new Database();  // Créer une instance de la classe Database
-$pdo = $db->getConnection(); // Récupérer l'objet PDO
+// Vérifier si l'utilisateur est admin
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    echo json_encode(['status' => 'error', 'message' => 'Accès non autorisé.']);
+    exit();
+}
 
-$id = $_GET['id'];
-$pdo->prepare("DELETE FROM services WHERE id = ?")->execute([$id]);
+// Récupérer les données envoyées par AJAX
+$input = json_decode(file_get_contents('php://input'), true);
 
-echo json_encode(['status' => 'success']);
+if (!isset($input['id'])) {
+    echo json_encode(['status' => 'error', 'message' => 'ID du service manquant.']);
+    exit();
+}
+
+$id = $input['id'];
+
+// Connexion à la base de données
+$db = new Database();
+$pdo = $db->getConnection();
+
+// Préparer et exécuter la requête SQL pour supprimer le service
+$stmt = $pdo->prepare("DELETE FROM services WHERE id = :id");
+$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+$stmt->execute();
+
+// Vérifier si un service a été supprimé
+if ($stmt->rowCount() > 0) {
+    echo json_encode(['status' => 'success']);
+} else {
+    echo json_encode(['status' => 'error', 'message' => 'Service non trouvé ou déjà supprimé.']);
+}
 ?>
