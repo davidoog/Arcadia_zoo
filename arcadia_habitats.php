@@ -6,7 +6,7 @@ require_once 'db.php';  // Inclure la connexion à la base de données via db.ph
 $db = new Database(); 
 $pdo = $db->getConnection(); // Récupération de l'objet PDO
 
-require 'mongo_connection.php'; // Connexion à MongoDB si nécessaire
+//require 'mongo_connection.php'; // Connexion à MongoDB si nécessaire
 
 // Requête pour récupérer les animaux de chaque habitat avec leurs dernières informations d'alimentation
 function getAnimalsByHabitat($pdo, $habitat) {

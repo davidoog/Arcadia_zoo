@@ -1,12 +1,11 @@
 <?php
-// Vérifie si la classe Database n'a pas déjà été déclarée
 if (!class_exists('Database')) {
     class Database {
         private $pdo;
 
         // Méthode pour créer une connexion à la base de données
         public function __construct() {
-            // Vérifie si l'application est en local ou sur Heroku
+            // Vérifie si l'application est en ligne ou local
             if (getenv('JAWSDB_URL')) {
                 // Connexion à la base de données JawsDB sur Heroku
                 $url = parse_url(getenv('JAWSDB_URL'));
@@ -19,7 +18,7 @@ if (!class_exists('Database')) {
                 $host = 'localhost';  // L'adresse de la base de données locale
                 $db = 'arcadia_db';   // Nom de la base de données locale
                 $user = 'root';       // Nom d'utilisateur de la base de données locale
-                $pass = '';           // Mot de passe vide pour la base de données locale
+                $pass = '147123C1secret!';           // Mot de passe de la base de données locale
             }
 
             $charset = 'utf8mb4';
