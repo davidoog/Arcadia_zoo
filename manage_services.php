@@ -41,7 +41,6 @@ try {
             <thead>
                 <tr>
                     <th>Titre</th>
-                    <th>Description</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -50,11 +49,8 @@ try {
                 <tr>
                     <td><?= htmlspecialchars($service['title']); ?></td>
                     <td>
-                        <?= isset($service['description1']) ? htmlspecialchars($service['description1']) : 'Pas de description'; ?>
-                    </td>
-                    <td>
-                        <a href="edit_service.php?id=<?= $service['id']; ?>" class="btn btn-warning">Modifier</a>
-                        <a href="delete_service.php?id=<?= $service['id']; ?>" class="btn btn-danger">Supprimer</a>
+                        <button class="btn btn-warning" onclick="editService(<?= $service['id']; ?>)">Modifier</button>
+                        <button class="btn btn-danger" onclick="deleteService(<?= $service['id']; ?>)">Supprimer</button>
                     </td>
                 </tr>
                 <?php endforeach; ?>
