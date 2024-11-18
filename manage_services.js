@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const serviceRow = `
                         <tr>
                             <td>${service.title}</td>
-                            <td>${service.description}</td>
+                            <td>${service.description ? service.description : 'Pas de description'}</td>
                             <td>
                                 <button class="btn btn-warning" onclick="editService(${service.id})">Modifier</button>
                                 <button class="btn btn-danger" onclick="deleteService(${service.id})">Supprimer</button>
