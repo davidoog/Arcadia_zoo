@@ -25,19 +25,19 @@ function getAnimalsByHabitat($pdo, $habitat) {
             SELECT af1.*
             FROM animal_feedings af1
             INNER JOIN (
-                SELECT animal_id, MAX(feeding_date) AS max_date
+                SELECT animal_id, MAX(id) AS max_id
                 FROM animal_feedings
                 GROUP BY animal_id
-            ) af2 ON af1.animal_id = af2.animal_id AND af1.feeding_date = af2.max_date
+            ) af2 ON af1.id = af2.max_id
         ) af ON a.id = af.animal_id
         LEFT JOIN (
             SELECT as2.*
             FROM animal_status as2
             INNER JOIN (
-                SELECT animal_id, MAX(status_date) AS max_status_date
+                SELECT animal_id, MAX(id) AS max_id
                 FROM animal_status
                 GROUP BY animal_id
-            ) as3 ON as2.animal_id = as3.animal_id AND as2.status_date = as3.max_status_date
+            ) as3 ON as2.id = as3.max_id
         ) as1 ON a.id = as1.animal_id
         WHERE a.habitat = :habitat
         ORDER BY a.name ASC
