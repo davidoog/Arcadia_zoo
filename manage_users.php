@@ -8,7 +8,7 @@ $pdo = $db->getConnection(); // Récupérer l'objet PDO
 
 // Vérifier si l'utilisateur est admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header('Location: arcadia_connexion.html');
+    header('Location: arcadia_connexion.php');
     exit();
 }
 
