@@ -1,20 +1,28 @@
 <?php
 session_start();
-require_once 'db.php';  // Inclure la connexion à la base de données via db.php
 
-// Connexion à la base de données via la classe Database
-$db = new Database(); 
+// Charger l'autoloader de Composer
+require 'vendor/autoload.php';
+
+// Inclure la connexion à la base de données via db.php
+require_once 'db.php';
+
+// Connexion à MySQL via la classe Database
+$db = new Database();
 $pdo = $db->getConnection(); // Récupération de l'objet PDO
 
-//require 'mongo_connection.php'; // Connexion à MongoDB si nécessaire
+// Connexion à MongoDB si nécessaire
+$mongoDb = $db->getMongoDb(); // Récupération de la base de données MongoDB
 
-// Requête pour récupérer les animaux de chaque habitat avec leurs dernières informations d'alimentation
+// Requête pour récupérer les animaux de chaque habitat avec leurs dernières informations d'alimentation et état de santé
 function getAnimalsByHabitat($pdo, $habitat) {
     $stmt = $pdo->prepare("
-        SELECT a.*, af.food_given, af.quantity, af.feeding_date
+        SELECT a.*,
+            af.food_given, af.quantity, af.feeding_date,
+            as1.status, as1.status_date, as1.vet_comment
         FROM animals a
         LEFT JOIN (
-            SELECT af1.animal_id, af1.food_given, af1.quantity, af1.feeding_date
+            SELECT af1.*
             FROM animal_feedings af1
             INNER JOIN (
                 SELECT animal_id, MAX(feeding_date) AS max_date
@@ -22,13 +30,23 @@ function getAnimalsByHabitat($pdo, $habitat) {
                 GROUP BY animal_id
             ) af2 ON af1.animal_id = af2.animal_id AND af1.feeding_date = af2.max_date
         ) af ON a.id = af.animal_id
+        LEFT JOIN (
+            SELECT as2.*
+            FROM animal_status as2
+            INNER JOIN (
+                SELECT animal_id, MAX(status_date) AS max_status_date
+                FROM animal_status
+                GROUP BY animal_id
+            ) as3 ON as2.animal_id = as3.animal_id AND as2.status_date = as3.max_status_date
+        ) as1 ON a.id = as1.animal_id
         WHERE a.habitat = :habitat
         ORDER BY a.name ASC
     ");
     $stmt->execute(['habitat' => $habitat]);
-    return $stmt->fetchAll();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+// Appels pour récupérer les animaux des habitats
 $savane = getAnimalsByHabitat($pdo, 'savane');
 $jungle = getAnimalsByHabitat($pdo, 'jungle');
 $marais = getAnimalsByHabitat($pdo, 'marais');
@@ -122,6 +140,8 @@ $marais = getAnimalsByHabitat($pdo, 'marais');
                             <p><strong>Nourriture :</strong> <?php echo $animal['food_given'] ?? 'Non défini'; ?></p>
                             <p><strong>Quantité :</strong> <?php echo $animal['quantity'] ?? 'Non défini'; ?></p>
                             <p><strong>Date :</strong> <?php echo $animal['feeding_date'] ?? 'Non défini'; ?></p>
+                            <p><strong>État de santé :</strong> <?php echo $animal['status'] ?? 'Non défini'; ?></p>
+                            <p><strong>Commentaire du vétérinaire :</strong> <?php echo $animal['vet_comment'] ?? 'Non défini'; ?></p> <!-- Affichage du commentaire uniquement -->
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -150,6 +170,8 @@ $marais = getAnimalsByHabitat($pdo, 'marais');
                             <p><strong>Nourriture :</strong> <?php echo $animal['food_given'] ?? 'Non défini'; ?></p>
                             <p><strong>Quantité :</strong> <?php echo $animal['quantity'] ?? 'Non défini'; ?></p>
                             <p><strong>Date :</strong> <?php echo $animal['feeding_date'] ?? 'Non défini'; ?></p>
+                            <p><strong>État de santé :</strong> <?php echo $animal['status'] ?? 'Non défini'; ?></p>
+                            <p><strong>Commentaire du vétérinaire :</strong> <?php echo $animal['vet_comment'] ?? 'Non défini'; ?></p> <!-- Affichage du commentaire uniquement -->
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -178,6 +200,8 @@ $marais = getAnimalsByHabitat($pdo, 'marais');
                             <p><strong>Nourriture :</strong> <?php echo $animal['food_given'] ?? 'Non défini'; ?></p>
                             <p><strong>Quantité :</strong> <?php echo $animal['quantity'] ?? 'Non défini'; ?></p>
                             <p><strong>Date :</strong> <?php echo $animal['feeding_date'] ?? 'Non défini'; ?></p>
+                            <p><strong>État de santé :</strong> <?php echo $animal['status'] ?? 'Non défini'; ?></p>
+                            <p><strong>Commentaire du vétérinaire :</strong> <?php echo $animal['vet_comment'] ?? 'Non défini'; ?></p> 
                         </div>
                     </div>
                 <?php endforeach; ?>

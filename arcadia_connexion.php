@@ -2,6 +2,9 @@
 session_start();
 require_once 'db.php'; 
 
+// Charger l'autoloader de Composer
+require 'vendor/autoload.php';
+
 // Connexion à la base de données via la classe Database
 $db = new Database();  
 $pdo = $db->getConnection();  // Récupérer l'objet PDO  

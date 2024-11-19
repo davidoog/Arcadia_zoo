@@ -1,17 +1,16 @@
 <?php
 session_start();
 
-// Connexion à MongoDB
+// Connexion à MongoDB et MySQL
 require 'vendor/autoload.php'; // Si vous utilisez Composer pour installer le driver MongoDB
 require_once 'db.php'; // Connexion à la base MySQL (si nécessaire)
 
-// Connexion à la base de données via la classe Database
+// Connexion à la base de données via la classe Database (MySQL)
 $db = new Database();
 $pdo = $db->getConnection();  // Récupérer l'objet PDO (si vous utilisez MySQL)
 
-// Vérifier si l'utilisateur est connecté et a le rôle 'admin'
+// Vérifier si l'utilisateur est connecté et a un rôle 'admin'
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    // Rediriger si l'utilisateur n'est pas admin
     header('Location: arcadia_connexion.php');
     exit();
 }
@@ -22,23 +21,30 @@ if (!isset($_SESSION['csrf_token'])) {
 }
 
 try {
-    // Connexion à MongoDB Atlas
-    $mongoUri = getenv('MONGODB_URI'); 
-    $client = new MongoDB\Client($mongoUri); // Connexion à MongoDB
-    $mongoDb = $client->Zoo_Arcadia; // Sélectionner la base de données Zoo_Arcadia
-    $collection = $mongoDb->Animals_visits; // Sélectionner la collection Animals_visits
+    // Connexion à MongoDB (en ligne ou en local selon la configuration)
+    $mongoUri = getenv('MONGODB_URI'); // Récupérer l'URL de connexion à MongoDB à partir de la variable d'environnement
+    if ($mongoUri) {
+        // Connexion à MongoDB avec l'URL définie dans la variable d'environnement
+        $client = new MongoDB\Client($mongoUri); // Connexion à MongoDB
+        $mongoDb = $client->Zoo_Arcadia; // Sélectionner la base de données
+        $collection = $mongoDb->Animals_visits; // Sélectionner la collection Animals_visits
 
-    // Récupérer toutes les visites (si nécessaire)
-    $visits = $collection->find(); // Exécuter la requête MongoDB pour récupérer les visites
+        // Récupérer toutes les visites (de MongoDB)
+        $visits = $collection->find(); 
 
-    // Récupérer les horaires depuis MySQL (si nécessaire)
-    $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch();
+    } else {
+        throw new Exception("MongoDB URI n'est pas défini dans la variable d'environnement.");
+    }
+
+    // Connexion MySQL pour récupérer les horaires (si nécessaire)
+    $hours = $pdo->query("SELECT * FROM zoo_hours WHERE id = 1")->fetch(); 
 
 } catch (Exception $e) {
     // Afficher l'erreur si la connexion échoue
     echo "Erreur lors de la récupération des données : " . $e->getMessage();
     die();
 }
+
 ?>
 
 <!DOCTYPE html>

@@ -3,6 +3,9 @@ session_start(); // Démarre la session
 require_once 'db.php';
 require 'Service.php'; //inclusion de la classe Service
 
+// Charger l'autoloader de Composer
+require 'vendor/autoload.php';
+
 // Connexion à la base de données via la classe Database
 $db = new Database();  // Créer une instance de la classe Database
 $pdo = $db->getConnection(); // Récupérer l'objet PDO
