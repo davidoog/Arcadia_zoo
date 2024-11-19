@@ -23,6 +23,13 @@ if (isset($_GET['id'])) {
         header('Location: manage_users.php');
         exit();
     }
+
+    // Empêcher la modification si l'utilisateur est un administrateur
+    if ($user['role'] === 'admin') {
+        // Rediriger ou afficher un message d'erreur
+        echo "<script>alert('Vous ne pouvez pas modifier l\'administrateur.'); window.location.href='manage_users.php';</script>";
+        exit();
+    }
 } else {
     header('Location: manage_users.php');
     exit();
@@ -63,14 +70,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier un utilisateur</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
         <h1>Modifier un utilisateur</h1>
-        <form action="edit_user.php?id=<?php echo $id; ?>" method="POST">
+        <form action="edit_user.php?id=<?php echo htmlspecialchars($id); ?>" method="POST">
             <div class="mb-3">
                 <label for="username" class="form-label">Nom d'utilisateur</label>
                 <input type="text" class="form-control" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
@@ -82,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="mb-3">
                 <label for="role" class="form-label">Rôle</label>
                 <select class="form-select" id="role" name="role" required>
-                    <option value="admin" <?php if ($user['role'] == 'admin') echo 'selected'; ?>>Admin</option>
+                    <!-- Suppression de l'option admin -->
                     <option value="vet" <?php if ($user['role'] == 'vet') echo 'selected'; ?>>Vétérinaire</option>
                     <option value="employee" <?php if ($user['role'] == 'employee') echo 'selected'; ?>>Employé</option>
                 </select>

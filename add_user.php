@@ -1,78 +1,89 @@
 <?php
 session_start();
-require_once 'db.php'; // Connexion à la base de données
+require_once 'db.php';
 
-// Connexion à la base de données via la classe Database
-$db = new Database();  
-$pdo = $db->getConnection();  // Récupérer l'objet PDO
+// Inclure l'autoloader de Composer
+require 'vendor/autoload.php';
 
-// Affichage des erreurs PHP pour le débogage
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// Charger PHPMailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 // Vérifier si l'utilisateur est admin
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    header('Location: arcadia_connexion.html');
+    header('Location: arcadia_connexion.php');
     exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
+    $email = $_POST['email']; // Récupérer l'email du formulaire
+    $username = $email; // Le nom d'utilisateur est l'adresse e-mail
     $password = $_POST['password'];
     $role = $_POST['role'];
 
-
-    // Validation des champs
-if (empty($username) || empty($password) || empty($role)) {
-    echo "Tous les champs sont requis.";
-    exit();
-}
-    // Utiliser password_hash pour hacher le mot de passe de manière sécurisée
+    // Hash du mot de passe
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Insérer l'utilisateur avec gestion des erreurs
-    try {
-        $stmt = $pdo->prepare("INSERT INTO users (username, password, role) VALUES (:username, :password, :role)");
-        $stmt->execute(['username' => $username, 'password' => $hashed_password, 'role' => $role]);
-        header('Location: manage_users.php');
+    // Connexion à la base de données
+    $db = new Database();
+    $pdo = $db->getConnection();
+
+    // Vérifier si l'e-mail existe déjà
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = :email");
+    $stmt->execute(['email' => $email]);
+    if ($stmt->fetch()) {
+        echo "Cet e-mail est déjà utilisé.";
         exit();
-    } catch (PDOException $e) {
-        echo "Erreur lors de l'insertion : " . $e->getMessage();
     }
+
+    // Insérer le nouvel utilisateur
+    $stmt = $pdo->prepare("INSERT INTO users (username, password, role, email) VALUES (:username, :password, :role, :email)");
+    $stmt->execute([
+        'username' => $username,
+        'password' => $hashed_password,
+        'role' => $role,
+        'email' => $email
+    ]);
+
+    // Envoi de l'e-mail au nouvel utilisateur
+    // Créer une instance de PHPMailer
+    $mail = new PHPMailer(true);
+
+    try {
+        // Configuration du serveur SMTP de Gmail
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';  // Hôte SMTP de Gmail
+        $mail->SMTPAuth = true;
+        $mail->Username = getenv('GMAIL_USERNAME'); // Récupère le nom d'utilisateur depuis les variables d'environnement
+        $mail->Password = getenv('GMAIL_PASSWORD'); // Récupère le mot de passe depuis les variables d'environnement
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Activez STARTTLS si disponible
+        $mail->Port = 587; // Port pour Gmail
+
+        // Configuration du message
+        $mail->setFrom('contactarcadia.supp@gmail.com', 'Zoo Arcadia');
+        $mail->addAddress($email); // Destinataire : le nouvel utilisateur
+        $mail->Subject = 'Votre compte sur le site du Zoo Arcadia';
+        $mail->Body = "Bonjour,
+
+Votre compte sur le site du Zoo Arcadia a été créé avec succès.
+
+Votre nom d'utilisateur est : $username
+
+Veuillez contacter l'administrateur pour obtenir votre mot de passe.
+
+Cordialement,
+L'équipe du Zoo Arcadia";
+
+        // Envoyer le message
+        $mail->send();
+        // Vous pouvez afficher un message de confirmation si nécessaire
+    } catch (Exception $e) {
+        // Gestion des erreurs
+        echo "Une erreur est survenue lors de l'envoi de l'e-mail. Erreur : {$mail->ErrorInfo}";
+    }
+
+    // Rediriger vers la page de gestion des utilisateurs
+    header('Location: manage_users.php');
+    exit();
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter un utilisateur</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Ajouter un utilisateur</h1>
-        <form action="add_user.php" method="POST">
-            <div class="mb-3">
-                <label for="username" class="form-label">Nom d'utilisateur</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <div class="mb-3">
-                <label for="role" class="form-label">Rôle</label>
-                <select class="form-select" id="role" name="role" required>
-            <option value="vet">Vétérinaire</option>
-                <option value="employee">Employé</option>
-    </select>
-</div>
-            <button type="submit" class="btn btn-success">Ajouter</button>
-        </form>
-        <a href="manage_users.php" class="btn btn-secondary mt-3">Retour</a>
-    </div>
-</body>
-</html>
