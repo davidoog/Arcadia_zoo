@@ -3,6 +3,7 @@ session_start();
 
 // Charger l'autoloader de Composer
 require 'vendor/autoload.php';
+require_once 'db.php'; // Assurez-vous que la connexion à la base de données est disponible
 
 // Charger PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
@@ -10,7 +11,7 @@ use PHPMailer\PHPMailer\Exception;
 
 // Fonction pour générer un token unique
 function generateToken() {
-    return bin2hex(random_bytes(16));
+    return bin2hex(random_bytes(32));
 }
 
 // Vérifier si le formulaire est soumis
@@ -29,12 +30,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_form'])) {
     } else {
         // Générer un token de vérification
         $token = generateToken();
-        $_SESSION['verification_token'] = $token;
-        $_SESSION['form_data'] = [
-            'subject' => $subject,
-            'description' => $description,
-            'email' => $email
-        ];
+        $createdAt = date('Y-m-d H:i:s');
+        $expiresAt = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+        // Connexion à la base de données
+        $db = new Database();
+        $pdo = $db->getConnection();
+
+        // Insérer les données dans la base de données
+        $stmt = $pdo->prepare("INSERT INTO contact_verification (email, subject, description, token, created_at, expires_at) VALUES (:email, :subject, :description, :token, :created_at, :expires_at)");
+        $stmt->execute([
+            ':email' => $email,
+            ':subject' => $subject,
+            ':description' => $description,
+            ':token' => $token,
+            ':created_at' => $createdAt,
+            ':expires_at' => $expiresAt
+        ]);
 
         // Créer une instance de PHPMailer
         $mail = new PHPMailer(true);
@@ -44,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_form'])) {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';  // Hôte SMTP de Gmail
             $mail->SMTPAuth = true;
-            $mail->Username = getenv('GMAIL_USERNAME'); // Récupère le nom d'utilisateur depuis les variables d'environnement de Heroku
-            $mail->Password = getenv('GMAIL_PASSWORD'); // Récupère le mot de passe depuis les variables d'environnement de Heroku
+            $mail->Username = getenv('GMAIL_USERNAME'); // Récupère le nom d'utilisateur depuis les variables d'environnement
+            $mail->Password = getenv('GMAIL_PASSWORD'); // Récupère le mot de passe depuis les variables d'environnement
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Activez STARTTLS si disponible
             $mail->Port = 587; // Port pour Gmail
 
@@ -53,12 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_form'])) {
             $mail->setFrom('contactarcadia.supp@gmail.com', 'Zoo Arcadia');
             $mail->addAddress($email); // Destinataire : l'utilisateur qui doit vérifier son e-mail
             $mail->Subject = "Vérification de votre adresse e-mail";
-            $verificationLink = "https://arcadia-zoo-2024-f65a95602ea5.herokuapp.com/arcadia_contact.php?token=$token";
+            $verificationLink = "https://votre-domaine.com/arcadia_contact.php?token=$token";
             $mail->Body = "Bonjour,
 
 Veuillez cliquer sur le lien suivant pour vérifier votre adresse e-mail et envoyer votre message au Zoo Arcadia :
 
 $verificationLink
+
+Ce lien expirera dans 1 heure.
 
 Si vous n'avez pas initié cette demande, veuillez ignorer cet e-mail.
 
@@ -78,17 +92,17 @@ L'équipe du Zoo Arcadia";
 // Vérification du token de vérification
 if (isset($_GET['token'])) {
     $token = $_GET['token'];
-    if (isset($_SESSION['verification_token']) && $token === $_SESSION['verification_token']) {
-        // Récupérer les données du formulaire
-        $formData = $_SESSION['form_data'];
-        $subject = $formData['subject'];
-        $description = $formData['description'];
-        $email = $formData['email'];
 
-        // Effacer le token et les données du formulaire de la session
-        unset($_SESSION['verification_token']);
-        unset($_SESSION['form_data']);
+    // Connexion à la base de données
+    $db = new Database();
+    $pdo = $db->getConnection();
 
+    // Rechercher le token dans la base de données
+    $stmt = $pdo->prepare("SELECT * FROM contact_verification WHERE token = :token AND expires_at > NOW()");
+    $stmt->execute([':token' => $token]);
+    $verificationData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($verificationData) {
         // Créer une instance de PHPMailer pour envoyer le message au zoo
         $mail = new PHPMailer(true);
 
@@ -97,21 +111,26 @@ if (isset($_GET['token'])) {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';  // Hôte SMTP de Gmail
             $mail->SMTPAuth = true;
-            $mail->Username = getenv('GMAIL_USERNAME'); // Récupère le nom d'utilisateur depuis les variables d'environnement de Heroku
-            $mail->Password = getenv('GMAIL_PASSWORD'); // Récupère le mot de passe depuis les variables d'environnement de Heroku
+            $mail->Username = getenv('GMAIL_USERNAME'); // Récupère le nom d'utilisateur depuis les variables d'environnement
+            $mail->Password = getenv('GMAIL_PASSWORD'); // Récupère le mot de passe depuis les variables d'environnement
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Activez STARTTLS si disponible
             $mail->Port = 587; // Port pour Gmail
 
             // Configuration du message
-            $mail->setFrom($email, 'Visiteur du site Arcadia Zoo');
+            $mail->setFrom($verificationData['email'], 'Visiteur du site Arcadia Zoo');
             $mail->addAddress('contactarcadia.supp@gmail.com'); // Destinataire du message
-            $mail->addReplyTo($email, 'Visiteur');  // L'email de l'utilisateur qui envoie le message
-            $mail->Subject = $subject;
-            $mail->Body = "Titre : $subject\n\nDescription : $description\n\nEmail : $email";
+            $mail->addReplyTo($verificationData['email'], 'Visiteur');  // L'email de l'utilisateur qui envoie le message
+            $mail->Subject = $verificationData['subject'];
+            $mail->Body = "Titre : {$verificationData['subject']}\n\nDescription : {$verificationData['description']}\n\nEmail : {$verificationData['email']}";
 
             // Envoyer le message
             $mail->send();
             $message = "Votre demande a été envoyée avec succès au Zoo Arcadia.";
+
+            // Supprimer l'entrée de la base de données
+            $stmt = $pdo->prepare("DELETE FROM contact_verification WHERE token = :token");
+            $stmt->execute([':token' => $token]);
+
         } catch (Exception $e) {
             // Gestion des erreurs
             $message = "Une erreur est survenue lors de l'envoi de votre demande. Erreur : {$mail->ErrorInfo}";
@@ -121,59 +140,26 @@ if (isset($_GET['token'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Zoo Arcadia</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="contact.css">
+    <!-- Vos liens CSS et autres métadonnées -->
 </head>
 <body>
-    <header>
-        <div class="topbar">
-            <div class="menu-icon" id="menu-icon">
-                <div class="menu-hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-
-            <div class="side-menu" id="side-menu">
-                <ul>
-                    <li><a href="arcadia_accueil.php">Accueil</a></li>
-                    <li><a href="arcadia_habitats.php">Habitats</a></li>
-                    <li><a href="arcadia_services.php">Services</a></li>
-                    <li><a href="arcadia_contact.php">Contact</a></li>
-                    <li><a href="arcadia_connexion.php">Connexion</a></li>
-                </ul>
-            </div>
-
-            <div class="menu">
-                <ul>
-                    <li><a href="arcadia_accueil.php">Retour vers la page d'accueil</a></li>
-                    <li><a href="arcadia_habitats.php">Accès à tous les habitats</a></li>
-                    <li><a href="arcadia_services.php">Accès à tous les services</a></li>
-                    <li><a href="arcadia_contact.php">Contact</a></li>
-                    <li class="connexion"><a href="arcadia_connexion.php" class="btn btn-primary">Connexion</a></li>
-                </ul>
-            </div>
-        </div>
-    </header>
-    
+    <!-- Votre en-tête -->
     <div class="container mt-5">
         <h1 class="text-center">Contactez-nous</h1>
         <p class="text-center">Remplissez le formulaire ci-dessous pour nous contacter</p>
-        
+
         <?php if (!empty($message)): ?>
             <div class="alert alert-info mt-3"><?php echo htmlspecialchars($message); ?></div>
         <?php endif; ?>
 
         <?php if (!isset($_GET['token']) || (isset($message) && strpos($message, 'Le token de vérification est invalide') !== false)): ?>
         <form id="contact-form" action="arcadia_contact.php" method="POST" class="mt-4">
+            <!-- Votre formulaire -->
             <div class="mb-3">
                 <label for="subject" class="form-label">Titre</label>
                 <input type="text" class="form-control" id="subject" name="subject" placeholder="Objet" required>
@@ -194,10 +180,7 @@ if (isset($_GET['token'])) {
             </div>
         </form>
         <?php endif; ?>
-
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="contact.js"></script>
+    <!-- Vos scripts JavaScript -->
 </body>
 </html>
