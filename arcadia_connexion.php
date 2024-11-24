@@ -7,9 +7,9 @@ require 'vendor/autoload.php';
 
 // Connexion à la base de données via la classe Database
 $db = new Database();  
-$pdo = $db->getConnection();  // Récupérer l'objet PDO  
+$pdo = $db->getConnection();  
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
     $username = htmlspecialchars(trim($_POST['username']));
     $password = trim($_POST['password']);
 
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        if ($password === $user['password']) {
+        if (password_verify($password, $user['password'])) {
             session_regenerate_id(true); 
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: arcadia_connexion.php?error=username');
         exit();
     }
-}
+} // Ajout de cette accolade fermante pour terminer le bloc "if ($_SERVER['REQUEST_METHOD'] == 'POST')".
 ?>
 
 <!DOCTYPE html>
